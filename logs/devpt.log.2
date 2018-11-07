@@ -1,0 +1,84 @@
+2018-11-07 17:11:25,767 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:11:30,356 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:17:38,199 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:17:46,836 ERROR: Exception on /submit [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 90, in submit
+    return render_template("submit.html", title="Submit", form=form)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/templates/submit.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/templates/base.html", line 31, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/templates/submit.html", line 30, in block "content"
+    <p>{{ form.submit() }}</p>
+jinja2.exceptions.UndefinedError: 'app.forms.PostForm object' has no attribute 'submit'
+2018-11-07 17:18:11,377 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:20:35,514 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:21:52,122 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:22:42,005 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:23:15,755 ERROR: Exception on /submit [POST] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 85, in submit
+    author=current_user.username)
+  File "<string>", line 4, in __init__
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/state.py", line 424, in _initialize_instance
+    manager.dispatch.init_failure(self, args, kwargs)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 249, in reraise
+    raise value
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/state.py", line 421, in _initialize_instance
+    return manager.original_init(*mixed[1:], **kwargs)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/ext/declarative/base.py", line 748, in _declarative_constructor
+    setattr(self, k, kwargs[k])
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 229, in __set__
+    instance_dict(instance), value, None)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 815, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 835, in fire_replace_event
+    state, value, previous, initiator or self._replace_token)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 1183, in emit_backref_from_scalar_set_event
+    child_state, child_dict = instance_state(child),\
+AttributeError: 'str' object has no attribute '_sa_instance_state'
+2018-11-07 17:24:07,237 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-07 17:30:23,185 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]

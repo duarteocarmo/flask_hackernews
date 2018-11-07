@@ -32,7 +32,7 @@ class Post(db.Model):
     text = db.Column(db.String(280))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    score = db.Column(db.Integer)
+    score = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return f"<Post {self.title}>"

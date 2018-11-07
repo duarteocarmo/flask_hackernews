@@ -6,5 +6,16 @@
     {% else %}    
         <h1>Hi, non authenticated user</h1>
     {% endif %}
+
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.title }}<i> by <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></i></li>
+            
+        {% endfor %}
+    </ul>
+
+    
+    
+
     
 {% endblock %}

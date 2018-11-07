@@ -2,14 +2,15 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from app.models import User, Post
 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template("index.html", posts=posts)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -60,7 +61,7 @@ def user(username):
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username, current_user.email)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
@@ -72,6 +73,22 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
         form.email.data = current_user.email
-    return render_template(
-        "edit_profile.html", title="Edit Profile", form=form
-    )
+    return render_template("edit_profile.html", title="Edit Profile", form=form)
+
+
+@app.route("/submit", methods=["GET", "POST"])
+@login_required
+def submit():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(
+            title=form.title.data,
+            url=form.url.data,
+            text=form.text.data,
+            author=current_user,
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash("Congratulations, your post was published!")
+        return redirect(url_for("index"))
+    return render_template("submit.html", title="Submit", form=form)
