@@ -1,0 +1,4 @@
+.flaskenv
+app.db
+.vscode
+migrations
