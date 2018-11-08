@@ -5,7 +5,6 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
 from app.models import User, Post, Vote
 
-# TODO X time ago
 # TODO post rankings
 # TODO post pages
 # TODO user pages

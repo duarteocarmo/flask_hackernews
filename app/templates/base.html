@@ -1,5 +1,10 @@
 <html>
     <head>
+
+        {{ moment.include_jquery() }}
+        {{ moment.include_moment() }}
+        {{ moment.lang("pt") }}
+
         {% if title %}
         <title>{{ title }} - Dev.pt</title>
         {% else %}
@@ -10,7 +15,7 @@
         <div>
             Dev.pt:
             <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('submit') }}">Submit</a>
+            <a href="{{ url_for('submit') }}">Submeter</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>
             {% else %}
@@ -31,3 +36,5 @@
         {% block content %}{% endblock %}
     </body>
 </html>
+
+

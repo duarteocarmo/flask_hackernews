@@ -2,16 +2,17 @@
 
 {% block content %}
     {% if current_user.is_authenticated %}
-        <h1>Hi, {{ current_user.username }}!</h1>
+        <h1>Olá, {{ current_user.username }}!</h1>
     {% else %}    
-        <h1>Hi, non authenticated user</h1>
+        <h1>Olá, anónimo</h1>
     {% endif %}
 
     <ol>
         {% for post in posts %}
-            <li>{{ post.title }}<i> by <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></i></li>
+            <li>{{ post.title }}<i> por <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></i></li>
             <span>Score: {{ post.score }}</span>
-            <span><a href="{{ url_for('upvote', post_id=post.id)}}">Upvote</a></span>
+            <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span>
+            <span>{{ moment(post.timestamp).fromNow() }}</span>
             <br>
         <br>
         {% endfor %}

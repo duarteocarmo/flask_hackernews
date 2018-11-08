@@ -2,3 +2,8 @@
 app.db
 .vscode
 migrations
+logs/devpt.log.1
+logs/devpt.log.2
+logs/devpt.log.3
+logs/devpt.log.5
+logs/devpt.log.6
