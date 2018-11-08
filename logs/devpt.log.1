@@ -1,4 +1,4 @@
-2018-11-07 17:30:29,342 ERROR: Exception on /submit [POST] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+2018-11-08 17:15:41,088 ERROR: Exception on /upvote/4 [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,30 +14,26 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 85, in submit
-    author=current_user.username)
-  File "<string>", line 4, in __init__
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/state.py", line 424, in _initialize_instance
-    manager.dispatch.init_failure(self, args, kwargs)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
-    compat.reraise(exc_type, exc_value, exc_tb)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 249, in reraise
-    raise value
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/state.py", line 421, in _initialize_instance
-    return manager.original_init(*mixed[1:], **kwargs)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/ext/declarative/base.py", line 748, in _declarative_constructor
-    setattr(self, k, kwargs[k])
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 229, in __set__
-    instance_dict(instance), value, None)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 815, in set
-    value = self.fire_replace_event(state, dict_, value, old, initiator)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 835, in fire_replace_event
-    state, value, previous, initiator or self._replace_token)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 1183, in emit_backref_from_scalar_set_event
-    child_state, child_dict = instance_state(child),\
-AttributeError: 'str' object has no attribute '_sa_instance_state'
-2018-11-07 17:32:48,845 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
-2018-11-07 17:33:00,920 ERROR: Exception on /submit [POST] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 105, in upvote
+    if voted is False:
+UnboundLocalError: local variable 'voted' referenced before assignment
+2018-11-08 17:26:15,279 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:26:30,475 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:27:14,628 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:27:52,217 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:30:57,029 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:31:02,922 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:32:16,185 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:32:22,636 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:36:50,832 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:41:53,853 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:42:04,799 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:42:49,031 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:44:08,222 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:50:55,048 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:51:14,211 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:51:57,110 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:52:24,783 ERROR: Exception on /upvote/4 [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -53,30 +49,63 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 85, in submit
-    author=current_user.username)
-  File "<string>", line 4, in __init__
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/state.py", line 424, in _initialize_instance
-    manager.dispatch.init_failure(self, args, kwargs)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
-    compat.reraise(exc_type, exc_value, exc_tb)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 249, in reraise
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 105, in upvote
+    post_to_upvote = Post.query.filter_by(post_id=post.id).first_or_404()
+NameError: name 'post' is not defined
+2018-11-08 17:52:58,520 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:53:28,882 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:53:31,797 ERROR: Exception on /upvote/4 [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/base.py", line 379, in _entity_descriptor
+    return getattr(entity, key)
+AttributeError: type object 'Post' has no attribute 'post_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/state.py", line 421, in _initialize_instance
-    return manager.original_init(*mixed[1:], **kwargs)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/ext/declarative/base.py", line 748, in _declarative_constructor
-    setattr(self, k, kwargs[k])
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 229, in __set__
-    instance_dict(instance), value, None)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 815, in set
-    value = self.fire_replace_event(state, dict_, value, old, initiator)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 835, in fire_replace_event
-    state, value, previous, initiator or self._replace_token)
-  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 1183, in emit_backref_from_scalar_set_event
-    child_state, child_dict = instance_state(child),\
-AttributeError: 'str' object has no attribute '_sa_instance_state'
-2018-11-07 17:34:10,595 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
-2018-11-07 17:38:59,287 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
-2018-11-07 17:43:38,406 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
-2018-11-07 17:44:11,591 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
-2018-11-07 17:46:20,529 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 105, in upvote
+    post_to_upvote = Post.query.filter_by(post_id=post_id).first_or_404()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1689, in filter_by
+    for key, value in kwargs.items()]
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1689, in <listcomp>
+    for key, value in kwargs.items()]
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/base.py", line 383, in _entity_descriptor
+    (description, key)
+sqlalchemy.exc.InvalidRequestError: Entity '<class 'app.models.Post'>' has no property 'post_id'
+2018-11-08 17:54:12,297 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:54:14,457 ERROR: Exception on /upvote/4 [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 106, in upvote
+    if Vote.query.filter_by(user_id=current_user.id, post_id=post_to_upvote.id):
+NameError: name 'Vote' is not defined
+2018-11-08 17:54:28,315 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:55:24,580 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]
+2018-11-08 17:57:02,254 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:28]

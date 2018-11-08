@@ -3,7 +3,12 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
-from app.models import User, Post
+from app.models import User, Post, Vote
+
+# TODO X time ago
+# TODO post rankings
+# TODO post pages
+# TODO user pages
 
 
 @app.route("/")
@@ -73,7 +78,9 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
         form.email.data = current_user.email
-    return render_template("edit_profile.html", title="Edit Profile", form=form)
+    return render_template(
+        "edit_profile.html", title="Edit Profile", form=form
+    )
 
 
 @app.route("/submit", methods=["GET", "POST"])
@@ -92,3 +99,20 @@ def submit():
         flash("Congratulations, your post was published!")
         return redirect(url_for("index"))
     return render_template("submit.html", title="Submit", form=form)
+
+
+@app.route("/upvote/<post_id>", methods=["GET", "POST"])
+@login_required
+def upvote(post_id):
+    post_to_upvote = Post.query.filter_by(id=post_id).first_or_404()
+    vote_query = Vote.query.filter_by(
+        user_id=current_user.id, post_id=post_to_upvote.id
+    ).first()
+    if vote_query is not None:
+        return redirect(url_for("index"))
+    else:
+        post_to_upvote.score += 1
+        vote = Vote(user_id=current_user.id, post_id=post_to_upvote.id)
+        db.session.add(vote)
+        db.session.commit()
+        return redirect(url_for("index"))

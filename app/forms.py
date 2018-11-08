@@ -1,5 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import (
+    StringField,
+    PasswordField,
+    BooleanField,
+    SubmitField,
+    TextAreaField,
+)
 from wtforms.validators import (
     ValidationError,
     DataRequired,
@@ -7,8 +13,7 @@ from wtforms.validators import (
     EqualTo,
     Length,
     URL,
-    Optional, 
-
+    Optional,
 )
 from app.models import User
 
@@ -65,15 +70,19 @@ class EditProfileForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired(), Length(min=1, max=80)])
-    text = TextAreaField("Submission Text", validators=[Optional(), Length(min=1, max=280)])
+    title = StringField(
+        "Title", validators=[DataRequired(), Length(min=1, max=80)]
+    )
+    text = TextAreaField(
+        "Submission Text", validators=[Optional(), Length(min=1, max=280)]
+    )
     url = StringField("url", validators=[Optional(), URL()])
     submit = SubmitField("Submit")
 
     def validate_text(self, text):
         if len(self.url.data) > 0:
-            raise ValidationError('Please choose text or link post.')
+            raise ValidationError("Please choose text or link post.")
 
     def validate_url(self, url):
         if len(self.text.data) > 0:
-            raise ValidationError('Please choose text or link post.')
+            raise ValidationError("Please choose text or link post.")
