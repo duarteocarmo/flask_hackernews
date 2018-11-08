@@ -11,7 +11,7 @@
         {% for post in posts %}
             {% if post.url %}
                 <li><a target="_blank" href="{{ post.url }}">{{ post.title }}</a></li>
-                <span>via {{ post.url_base }}</span>
+                <span>(via {{ post.url_base }})</span>
             {% else %}
                 <li><a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.title }}</a></li>
             {% endif %}

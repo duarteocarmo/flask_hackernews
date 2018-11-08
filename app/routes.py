@@ -5,10 +5,11 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
 from app.models import User, Post, Vote
 
-
-# TODO post pages and clickability
-# TODO user pages better
 # TODO post rankings
+# TODO user pages better
+# TODO comments (and all that comes with that shit)
+# TODO Karma
+# TODO post pages and recycling
 
 
 @app.route("/")
@@ -42,7 +43,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route("/register", methods=["GET"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
@@ -57,7 +58,7 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
-@app.route("/user/<username>")
+@app.route("/user/<username>", methods=["GET"])
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template("user.html", user=user)
@@ -102,7 +103,7 @@ def submit():
     return render_template("submit.html", title="Submit", form=form)
 
 
-@app.route("/upvote/<post_id>", methods=["GET", "POST"])
+@app.route("/upvote/<post_id>", methods=["GET"])
 @login_required
 def upvote(post_id):
     post_to_upvote = Post.query.filter_by(id=post_id).first_or_404()
@@ -118,11 +119,22 @@ def upvote(post_id):
         db.session.commit()
         return redirect(url_for("index"))
 
-@app.route("/post/<post_id>", methods=["GET", "POST"])
+@app.route("/post/<post_id>", methods=["GET"])
 def post_page(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
     if not post.text:
         return render_template('404.html')
     else:
         return render_template("post.html", post=post)
+
+
+@app.route("/submissions/<username>", methods=["GET"])
+def user_submissions(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)
+    return render_template("index.html", posts=posts)
+
+
+
+
 
