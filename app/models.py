@@ -1,4 +1,6 @@
 from datetime import datetime
+from urllib.parse import urlparse
+
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -35,10 +37,19 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     url = db.Column(db.Text())
+    url_base = db.Column(db.Text())
     text = db.Column(db.String(280))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    score = db.Column(db.Integer, default=1)
+    score = db.Column(db.Integer, default=0)
+
+    def set_url_base(self, url):
+        if url is not None:
+            parsed_uri = urlparse(url)
+            self.url_base = '{uri.netloc}'.format(uri=parsed_uri)
+        else:
+            self.url_base = None
+
 
     def __repr__(self):
         return f"<Post {self.title}>"

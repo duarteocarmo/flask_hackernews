@@ -9,7 +9,13 @@
 
     <ol>
         {% for post in posts %}
-            <li>{{ post.title }}<i> por <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></i></li>
+            {% if post.url %}
+                <li><a target="_blank" href="{{ post.url }}">{{ post.title }}</a></li>
+                <span>via {{ post.url_base }}</span>
+            {% else %}
+                <li><a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.title }}</a></li>
+            {% endif %}
+            <span><i>por <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></i></span>
             <span>Score: {{ post.score }}</span>
             <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span>
             <span>{{ moment(post.timestamp).fromNow() }}</span>

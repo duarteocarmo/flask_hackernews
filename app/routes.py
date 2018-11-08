@@ -5,9 +5,10 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
 from app.models import User, Post, Vote
 
+
+# TODO post pages and clickability
+# TODO user pages better
 # TODO post rankings
-# TODO post pages
-# TODO user pages
 
 
 @app.route("/")
@@ -41,7 +42,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET"])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
@@ -93,6 +94,7 @@ def submit():
             text=form.text.data,
             author=current_user,
         )
+        post.set_url_base(form.url.data)
         db.session.add(post)
         db.session.commit()
         flash("Congratulations, your post was published!")
@@ -115,3 +117,12 @@ def upvote(post_id):
         db.session.add(vote)
         db.session.commit()
         return redirect(url_for("index"))
+
+@app.route("/post/<post_id>", methods=["GET", "POST"])
+def post_page(post_id):
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    if not post.text:
+        return render_template('404.html')
+    else:
+        return render_template("post.html", post=post)
+
