@@ -1,0 +1,115 @@
+2018-11-08 19:19:24,336 ERROR: Exception on /index [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
+    context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 509, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: post.url_base
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 18, in index
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 2843, in all
+    return list(self)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 2995, in __iter__
+    return self._execute_and_instances(context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3018, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 948, in execute
+    return meth(self, multiparams, params)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 269, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1060, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1200, in _execute_context
+    context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1413, in _handle_dbapi_exception
+    exc_info
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 265, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 248, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
+    context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 509, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: post.url_base [SQL: 'SELECT post.id AS post_id, post.title AS post_title, post.url AS post_url, post.url_base AS post_url_base, post.text AS post_text, post.timestamp AS post_timestamp, post.user_id AS post_user_id, post.score AS post_score \nFROM post ORDER BY post.timestamp DESC'] (Background on this error at: http://sqlalche.me/e/e3q8)
+2018-11-08 19:19:24,637 ERROR: Exception on /index [GET] [in /Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
+    context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 509, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: post.url_base
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/duarteocarmo/SourceTree_Repos/dev.pt/app/routes.py", line 18, in index
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 2843, in all
+    return list(self)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 2995, in __iter__
+    return self._execute_and_instances(context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3018, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 948, in execute
+    return meth(self, multiparams, params)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 269, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1060, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1200, in _execute_context
+    context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1413, in _handle_dbapi_exception
+    exc_info
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 265, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 248, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
+    context)
+  File "/Users/duarteocarmo/anaconda/envs/dev.to/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 509, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: post.url_base [SQL: 'SELECT post.id AS post_id, post.title AS post_title, post.url AS post_url, post.url_base AS post_url_base, post.text AS post_text, post.timestamp AS post_timestamp, post.user_id AS post_user_id, post.score AS post_score \nFROM post ORDER BY post.timestamp DESC'] (Background on this error at: http://sqlalche.me/e/e3q8)
+2018-11-08 19:19:39,805 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:19:47,821 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:19:52,876 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:22:25,968 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:23:00,176 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:26:19,916 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:28:48,261 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 19:30:55,849 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:02:08,025 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:02:22,581 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:04:27,325 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:05:22,972 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:07:19,636 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:07:47,059 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]
+2018-11-08 20:09:04,314 INFO: Devpt startup [in /Users/duarteocarmo/SourceTree_Repos/dev.pt/app/__init__.py:34]

@@ -15,6 +15,7 @@
         <div>
             Dev.pt:
             <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('new') }}">New</a>
             <a href="{{ url_for('submit') }}">Submeter</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>

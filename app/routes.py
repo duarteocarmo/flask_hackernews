@@ -4,18 +4,27 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
 from app.models import User, Post, Vote
+from datetime import datetime
+from sqlalchemy import func
 
-# TODO post rankings
-# TODO user pages better
+# TODO Pagination
 # TODO comments (and all that comes with that shit)
-# TODO Karma
-# TODO post pages and recycling
+# TODO moderation of user posts
 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    # TODO optimize this rendering
+    for post in Post.query.all():
+        post.set_score()
+        db.session.commit()
+    posts = Post.query.order_by(Post.pop_score.desc()).limit(50)
+    return render_template("index.html", posts=posts)
+
+@app.route("/new")
+def new():
+    posts = Post.query.order_by(Post.timestamp.desc()).limit(50)
     return render_template("index.html", posts=posts)
 
 
@@ -79,9 +88,7 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
         form.email.data = current_user.email
-    return render_template(
-        "edit_profile.html", title="Edit Profile", form=form
-    )
+    return render_template("edit_profile.html", title="Edit Profile", form=form)
 
 
 @app.route("/submit", methods=["GET", "POST"])
@@ -95,7 +102,7 @@ def submit():
             text=form.text.data,
             author=current_user,
         )
-        post.set_url_base(form.url.data)
+        post.format_post(form.url.data)
         db.session.add(post)
         db.session.commit()
         flash("Congratulations, your post was published!")
@@ -114,16 +121,18 @@ def upvote(post_id):
         return redirect(url_for("index"))
     else:
         post_to_upvote.score += 1
+        post_to_upvote.author.karma += 1
         vote = Vote(user_id=current_user.id, post_id=post_to_upvote.id)
         db.session.add(vote)
         db.session.commit()
         return redirect(url_for("index"))
 
+
 @app.route("/post/<post_id>", methods=["GET"])
 def post_page(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
     if not post.text:
-        return render_template('404.html')
+        return render_template("404.html")
     else:
         return render_template("post.html", post=post)
 
@@ -133,8 +142,3 @@ def user_submissions(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user)
     return render_template("index.html", posts=posts)
-
-
-
-
-
