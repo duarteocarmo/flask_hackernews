@@ -89,10 +89,14 @@ class Comment(db.Model):
     path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey("comment.id"))
     replies = db.relationship(
-        "Comment", backref=db.backref("parent", remote_side=[id]), lazy="dynamic"
+        "Comment",
+        backref=db.backref("parent", remote_side=[id]),
+        lazy="dynamic",
     )
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
-    thread_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    thread_timestamp = db.Column(
+        db.DateTime, index=True, default=datetime.utcnow()
+    )
 
     def save(self):
         db.session.add(self)
@@ -105,4 +109,6 @@ class Comment(db.Model):
         return len(self.path) // self._N - 1
 
     def __repr__(self):
-        return f"<Comment: {self.text} Post: {self.post_id} User: {self.user_id}>"
+        return (
+            f"<Comment: {self.text} Post: {self.post_id} User: {self.user_id}>"
+        )

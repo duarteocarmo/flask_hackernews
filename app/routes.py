@@ -14,14 +14,14 @@ from app.forms import (
 )
 from app.models import Comment, Post, User, Vote
 
-
-# TODO Post Deletio
+# TODO Post Deletion
 # TODO Pagination
 # TODO DeadPosts
 # TODO moderation of user posts
 # TODO login page does not redirect to previous (commenting example)
 # TODO lost my password
 # TODO comment scores
+# TODO blueprints
 
 
 @app.route("/")
