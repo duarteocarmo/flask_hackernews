@@ -1,15 +1,27 @@
-from flask import render_template, flash, redirect, url_for, request
-from flask_login import login_user, logout_user, current_user, login_required
-from werkzeug.urls import url_parse
-from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
-from app.models import User, Post, Vote
 from datetime import datetime
-from sqlalchemy import func
 
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.urls import url_parse
+
+from app import app, db
+from app.forms import (
+    CommentForm,
+    EditProfileForm,
+    LoginForm,
+    PostForm,
+    RegistrationForm,
+)
+from app.models import Comment, Post, User, Vote
+
+
+# TODO Post Deletio
 # TODO Pagination
-# TODO comments (and all that comes with that shit)
+# TODO DeadPosts
 # TODO moderation of user posts
+# TODO login page does not redirect to previous (commenting example)
+# TODO lost my password
+# TODO comment scores
 
 
 @app.route("/")
@@ -21,6 +33,7 @@ def index():
         db.session.commit()
     posts = Post.query.order_by(Post.pop_score.desc()).limit(50)
     return render_template("index.html", posts=posts)
+
 
 @app.route("/new")
 def new():
@@ -70,7 +83,9 @@ def register():
 @app.route("/user/<username>", methods=["GET"])
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template("user.html", user=user)
+    return render_template(
+        "user.html", user=user, title=f"Profile: {username}"
+    )
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
@@ -88,7 +103,9 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
         form.email.data = current_user.email
-    return render_template("edit_profile.html", title="Edit Profile", form=form)
+    return render_template(
+        "edit_profile.html", title="Edit Profile", form=form
+    )
 
 
 @app.route("/submit", methods=["GET", "POST"])
@@ -128,13 +145,33 @@ def upvote(post_id):
         return redirect(url_for("index"))
 
 
-@app.route("/post/<post_id>", methods=["GET"])
+@app.route("/post/<post_id>", methods=["GET", "POST"])
 def post_page(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
-    if not post.text:
-        return render_template("404.html")
-    else:
-        return render_template("post.html", post=post)
+
+    comments = (
+        Comment.query.filter_by(post_id=post.id)
+        .order_by(Comment.thread_timestamp.desc(), Comment.path.asc())
+        .all()
+    )
+    form = CommentForm()
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            comment = Comment(
+                text=form.text.data,
+                author=current_user,
+                post_id=post.id,
+                timestamp=datetime.utcnow(),
+                thread_timestamp=datetime.utcnow(),
+            )
+            comment.save()
+            return redirect(url_for("post_page", post_id=post.id))
+        else:
+            return redirect(url_for("login"))
+
+    return render_template(
+        "post.html", post=post, form=form, comments=comments, title=post.title
+    )
 
 
 @app.route("/submissions/<username>", methods=["GET"])
@@ -142,3 +179,22 @@ def user_submissions(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user)
     return render_template("index.html", posts=posts)
+
+
+@app.route("/reply/<comment_id>", methods=["GET", "POST"])
+@login_required
+def reply(comment_id):
+    parent = Comment.query.filter_by(id=comment_id).first_or_404()
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(
+            text=form.text.data,
+            author=current_user,
+            post_id=parent.post_id,
+            parent_id=parent.id,
+            timestamp=datetime.utcnow(),
+            thread_timestamp=parent.thread_timestamp,
+        )
+        comment.save()
+        return redirect(url_for("post_page", post_id=parent.post_id))
+    return render_template("reply.html", comment=parent, form=form)

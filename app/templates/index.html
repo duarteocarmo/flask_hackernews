@@ -2,23 +2,24 @@
 
 {% block content %}
     {% if current_user.is_authenticated %}
-        <h1>Olá, {{ current_user.username }}!</h1>
+        <h3>Olá, {{ current_user.username }}!</h3>
     {% else %}    
-        <h1>Olá, anónimo</h1>
+        <h3>Olá, anónimo</h3>
     {% endif %}
 
     <ol>
         {% for post in posts %}
             {% if post.url %}
-                <li><a target="_blank" href="{{ post.url }}">{{ post.title }}</a></li>
-                <span>(via {{ post.url_base }})</span>
+                <li><a target="_blank" href="{{ post.url }}">{{ post.title }}</a><em><span> (via {{ post.url_base }})</span></em></li>
             {% else %}
                 <li><a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.title }}</a></li>
             {% endif %}
-            <span><i>por <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a></i></span>
-            <span>Score: {{ post.score }}</span>
-            <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span>
-            <span>{{ moment(post.timestamp).fromNow() }}</span>
+            <div>
+                    <span>{{ post.score }} pontos por <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a> {{ moment(post.timestamp).fromNow() }} | <a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.total_comments() }} Comentários</a></span>
+            </div>
+            <div>
+                    <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span>
+            </div>
             <br>
         <br>
         {% endfor %}

@@ -86,3 +86,8 @@ class PostForm(FlaskForm):
     def validate_url(self, url):
         if len(self.text.data) > 0:
             raise ValidationError("Please choose text or link post.")
+
+
+class CommentForm(FlaskForm):
+    text = TextAreaField("Comment Text", validators=[DataRequired(), Length(min=1, max=280)])
+    submit = SubmitField("Add Comment")

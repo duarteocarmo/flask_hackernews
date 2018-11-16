@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
-
 from flask_login import UserMixin
+from sqlalchemy import case, func
+from sqlalchemy.ext.hybrid import hybrid_method
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db, login
-from sqlalchemy.ext.hybrid import hybrid_method
-from sqlalchemy import case, func
 
 
 class User(UserMixin, db.Model):
@@ -16,7 +15,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     posts = db.relationship("Post", backref="author", lazy="dynamic")
-    comments = db.relationship("Comment", backref="comment_author", lazy="dynamic")
+    comments = db.relationship("Comment", backref="author", lazy="dynamic")
     about_me = db.Column(db.String(140))
     karma = db.Column(db.Integer, default=1)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
@@ -53,9 +52,12 @@ class Post(db.Model):
             self.url_base = "{uri.netloc}".format(uri=parsed_uri)
         else:
             self.url_base = None
-            
+
         if str(url).endswith(".pdf"):
             self.title += " [pdf]"
+
+    def total_comments(self):
+        return len(Comment.query.filter_by(post_id=self.id).all())
 
     def set_score(self, gravity=1.8):
         datetime_difference = datetime.utcnow() - self.timestamp
@@ -79,23 +81,28 @@ class Vote(db.Model):
 
 class Comment(db.Model):
     _N = 6
-    
+
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    timestamp = db.Column(db.DateTime(), default=datetime.utcnow, index=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     path = db.Column(db.Text, index=True)
-    parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey("comment.id"))
     replies = db.relationship(
-        'Comment', backref=db.backref('parent', remote_side=[id]),
-        lazy='dynamic')
+        "Comment", backref=db.backref("parent", remote_side=[id]), lazy="dynamic"
+    )
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
+    thread_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
 
     def save(self):
         db.session.add(self)
         db.session.commit()
-        prefix = self.parent.path + '.' if self.parent else ''
-        self.path = prefix + '{:0{}d}'.format(self.id, self._N)
+        prefix = self.parent.path + "." if self.parent else ""
+        self.path = prefix + "{:0{}d}".format(self.id, self._N)
         db.session.commit()
 
     def level(self):
         return len(self.path) // self._N - 1
+
+    def __repr__(self):
+        return f"<Comment: {self.text} Post: {self.post_id} User: {self.user_id}>"

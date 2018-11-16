@@ -1,9 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <p>{{ post.title }}</p>
-<p>{{ post.text }}</p>
+{% if post.text %}
+{% filter markdown %}
+{{ post.text }}
+{% endfilter %}
+{% endif %}
 <p>by {{post.author.username }}</p>
 
+
+<br>
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.text.label }}<br>
+        {{ form.text(cols=50, rows=4) }}<br>
+        {% for error in form.text.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+
+
+<br>
+
+{% for comment in comments %}
+<table>
+    <tbody>
+        <tr>
+        <td width="{{ comment.level() * 40}}" height="1"></td>
+        <td valign="top">
+            <center>
+                <!--<a href=""> <div>Vota</div> </a>-->
+            <a href=""> <div> </div> </a>
+            </center>
+        </td>
+        <td>
+            <div><span><a href="{{ url_for('user', username=comment.author.username) }}">{{ comment.author.username }}</a></span><span> {{ moment(comment.timestamp).fromNow() }}</span></div>
+            <div>
+                    
+                    {% filter markdown %}{{ comment.text }}{% endfilter %}
+                    
+            <div>
+                <p><a href="{{url_for('reply', comment_id=comment.id)}}"><u>Reply</u></a></p>
+            </div>
+            </div>
+        </td>
+        </tr>
+    </tbody>
+</table>
+{% endfor %}
 {% endblock %}
 
