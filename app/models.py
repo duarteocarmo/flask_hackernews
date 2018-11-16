@@ -45,6 +45,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     score = db.Column(db.Integer, default=0)
     pop_score = db.Column(db.Float, default=0)
+    deleted = db.Column(db.Integer, default=0)
 
     def format_post(self, url):
         if url is not None:
@@ -55,6 +56,9 @@ class Post(db.Model):
 
         if str(url).endswith(".pdf"):
             self.title += " [pdf]"
+
+    def delete_post(self):
+        self.deleted = 1
 
     def total_comments(self):
         return len(Comment.query.filter_by(post_id=self.id).all())

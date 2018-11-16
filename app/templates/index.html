@@ -19,6 +19,9 @@
             </div>
             <div>
                     <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span>
+                    {%if current_user == post.author %}
+                    <span><a href="{{ url_for('delete', post_id=post.id)}}"> Apagar</a></span>
+                    {% endif %}
             </div>
             <br>
         <br>

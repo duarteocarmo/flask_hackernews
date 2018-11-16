@@ -14,9 +14,8 @@ from app.forms import (
 )
 from app.models import Comment, Post, User, Vote
 
-# TODO Post Deletion
+
 # TODO Pagination
-# TODO DeadPosts
 # TODO moderation of user posts
 # TODO login page does not redirect to previous (commenting example)
 # TODO lost my password
@@ -31,7 +30,7 @@ def index():
     for post in Post.query.all():
         post.set_score()
         db.session.commit()
-    posts = Post.query.order_by(Post.pop_score.desc()).limit(50)
+    posts = Post.query.filter_by(deleted=0).order_by(Post.pop_score.desc()).limit(50)
     return render_template("index.html", posts=posts)
 
 
@@ -145,6 +144,18 @@ def upvote(post_id):
         return redirect(url_for("index"))
 
 
+@app.route("/delete/<post_id>", methods=["GET"])
+@login_required
+def delete(post_id):
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    if current_user == post.author:
+        post.delete_post()
+        db.session.commit()
+        return redirect(url_for('index'))
+    else:
+        return render_template('404.html'), 404
+
+
 @app.route("/post/<post_id>", methods=["GET", "POST"])
 def post_page(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
@@ -177,7 +188,7 @@ def post_page(post_id):
 @app.route("/submissions/<username>", methods=["GET"])
 def user_submissions(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)
+    posts = Post.query.filter_by(author=user, deleted=0)
     return render_template("index.html", posts=posts)
 
 
