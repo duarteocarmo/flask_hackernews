@@ -11,16 +11,19 @@ from app.forms import (
     LoginForm,
     PostForm,
     RegistrationForm,
+    ResetPasswordRequestForm,
+    ResetPasswordForm,
 )
 from app.models import Comment, Post, User, Vote
+from app.mail import send_password_reset_email
 
 
-# TODO lost my password
 # TODO moderation of user posts
 # TODO login page does not redirect to previous (commenting example)
 # TODO comment sorty by score
 # TODO blueprints
 # TODO review methods
+# TODO prepare raw english version open sourced.
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -244,3 +247,35 @@ def reply(comment_id):
         comment.save()
         return redirect(url_for("post_page", post_id=parent.post_id))
     return render_template("reply.html", comment=parent, form=form)
+
+
+@app.route("/reset_password_request", methods=["GET", "POST"])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash("An email with instructions was sent to your address.")
+        return redirect(url_for("login"))
+    return render_template(
+        "reset_password_request.html", title="Reset Password", form=form
+    )
+
+
+@app.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for("index"))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("Your password has been reset.")
+        return redirect(url_for("login"))
+    return render_template("reset_password.html", form=form)

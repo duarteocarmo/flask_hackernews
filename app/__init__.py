@@ -8,6 +8,7 @@ import os
 from logging.handlers import RotatingFileHandler
 import logging
 from flaskext.markdown import Markdown
+from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,6 +18,7 @@ login = LoginManager(app)
 login.login_view = "login"
 moment = Moment(app)
 markdown = Markdown(app)
+mail = Mail(app)
 
 if not app.debug:
     if not os.path.exists("logs"):
