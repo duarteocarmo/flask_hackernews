@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if current_user.is_authenticated %}
+   <!-- {% if current_user.is_authenticated %}
         <h3>Olá, {{ current_user.username }}!</h3>
     {% else %}    
         <h3>Olá, anónimo</h3>
-    {% endif %}
+    {% endif %}-->
 
-    <ol>
+    <ol start="{{ start_rank_num }}">
         {% for post in posts %}
             {% if post.url %}
                 <li><a target="_blank" href="{{ post.url }}">{{ post.title }}</a><em><span> (via {{ post.url_base }})</span></em></li>
@@ -26,5 +26,9 @@
             <br>
         <br>
         {% endfor %}
-    </ol>  
+    </ol>
+    {% if next_url %}
+    <a href="{{ next_url }}"> More</a>
+    {% endif %}
+    
 {% endblock %}

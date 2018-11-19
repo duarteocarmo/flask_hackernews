@@ -15,29 +15,64 @@ from app.forms import (
 from app.models import Comment, Post, User, Vote
 
 
-# TODO Pagination
+# TODO lost my password
 # TODO moderation of user posts
 # TODO login page does not redirect to previous (commenting example)
-# TODO lost my password
-# TODO comment scores
+# TODO comment sorty by score
 # TODO blueprints
+# TODO review methods
 
 
-@app.route("/")
-@app.route("/index")
+@app.route("/", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])
 def index():
     # TODO optimize this rendering
     for post in Post.query.all():
         post.set_score()
         db.session.commit()
-    posts = Post.query.filter_by(deleted=0).order_by(Post.pop_score.desc()).limit(50)
-    return render_template("index.html", posts=posts)
+
+    page = request.args.get("page", 1, type=int)
+    posts = (
+        Post.query.filter_by(deleted=0)
+        .order_by(Post.pop_score.desc())
+        .paginate(page, app.config["POSTS_PER_PAGE"], True)
+    )
+
+    start_rank_num = app.config["POSTS_PER_PAGE"] * (page - 1) + 1
+    next_url = (
+        url_for("index", page=posts.next_num) if posts.has_next else None
+    )
+
+    return render_template(
+        "index.html",
+        posts=posts.items,
+        next_url=next_url,
+        start_rank_num=start_rank_num,
+    )
 
 
-@app.route("/new")
+@app.route("/newest", methods=["GET", "POST"])
 def new():
-    posts = Post.query.order_by(Post.timestamp.desc()).limit(50)
-    return render_template("index.html", posts=posts)
+    for post in Post.query.all():
+        post.set_score()
+        db.session.commit()
+
+    page = request.args.get("page", 1, type=int)
+    posts = (
+        Post.query.filter_by(deleted=0)
+        .order_by(Post.timestamp.desc())
+        .paginate(page, app.config["POSTS_PER_PAGE"], True)
+    )
+
+    start_rank_num = app.config["POSTS_PER_PAGE"] * (page - 1) + 1
+    next_url = url_for("new", page=posts.next_num) if posts.has_next else None
+
+    return render_template(
+        "index.html",
+        posts=posts.items,
+        next_url=next_url,
+        start_rank_num=start_rank_num,
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -151,9 +186,9 @@ def delete(post_id):
     if current_user == post.author:
         post.delete_post()
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
     else:
-        return render_template('404.html'), 404
+        return render_template("404.html"), 404
 
 
 @app.route("/post/<post_id>", methods=["GET", "POST"])
