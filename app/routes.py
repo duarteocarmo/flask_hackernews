@@ -18,9 +18,10 @@ from app.models import Comment, Post, User, Vote
 from app.mail import send_password_reset_email
 
 
-# TODO moderation of user posts
+# TODO upvote comments
+# TODO delete comments
+# TODO comment sort by score
 # TODO login page does not redirect to previous (commenting example)
-# TODO comment sorty by score
 # TODO blueprints
 # TODO review methods
 # TODO prepare raw english version open sourced.
@@ -30,14 +31,16 @@ from app.mail import send_password_reset_email
 @app.route("/index", methods=["GET", "POST"])
 def index():
     # TODO optimize this rendering
-    for post in Post.query.all():
-        post.set_score()
+    for post in Post.query.filter_by(deleted=0).all():
+        post.update()
         db.session.commit()
 
     page = request.args.get("page", 1, type=int)
     posts = (
         Post.query.filter_by(deleted=0)
         .order_by(Post.pop_score.desc())
+        .limit(app.config["TOTAL_POSTS"])
+        .from_self()
         .paginate(page, app.config["POSTS_PER_PAGE"], True)
     )
 
@@ -57,7 +60,7 @@ def index():
 @app.route("/newest", methods=["GET", "POST"])
 def new():
     for post in Post.query.all():
-        post.set_score()
+        post.update()
         db.session.commit()
 
     page = request.args.get("page", 1, type=int)
@@ -150,17 +153,24 @@ def edit_profile():
 def submit():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(
-            title=form.title.data,
-            url=form.url.data,
-            text=form.text.data,
-            author=current_user,
-        )
-        post.format_post(form.url.data)
-        db.session.add(post)
-        db.session.commit()
-        flash("Congratulations, your post was published!")
-        return redirect(url_for("index"))
+        if current_user.can_post():
+            post = Post(
+                title=form.title.data,
+                url=form.url.data,
+                text=form.text.data,
+                author=current_user,
+            )
+            post.format_post(form.url.data)
+            db.session.add(post)
+            db.session.commit()
+            flash("Congratulations, your post was published!")
+            return redirect(url_for("post_page", post_id=post.id))
+        else:
+            flash(
+                f"Sorry, you can only post {app.config['USER_POSTS_PER_DAY']} times a day"
+            )
+            return redirect(url_for("index"))
+
     return render_template("submit.html", title="Submit", form=form)
 
 
@@ -206,15 +216,20 @@ def post_page(post_id):
     form = CommentForm()
     if form.validate_on_submit():
         if current_user.is_authenticated:
-            comment = Comment(
-                text=form.text.data,
-                author=current_user,
-                post_id=post.id,
-                timestamp=datetime.utcnow(),
-                thread_timestamp=datetime.utcnow(),
-            )
-            comment.save()
-            return redirect(url_for("post_page", post_id=post.id))
+            if current_user.can_comment():
+                comment = Comment(
+                    text=form.text.data,
+                    author=current_user,
+                    post_id=post.id,
+                    timestamp=datetime.utcnow(),
+                    thread_timestamp=datetime.utcnow(),
+                )
+                comment.save()
+                return redirect(url_for("post_page", post_id=post.id))
+            else:
+                flash(
+                    f"You can only commment {app.config['USER_COMMENTS_PER_DAY']} times a day."
+                )
         else:
             return redirect(url_for("login"))
 
@@ -226,7 +241,9 @@ def post_page(post_id):
 @app.route("/submissions/<username>", methods=["GET"])
 def user_submissions(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user, deleted=0)
+    posts = Post.query.filter_by(author=user, deleted=0).order_by(
+        Post.timestamp.desc()
+    )
     return render_template("index.html", posts=posts)
 
 

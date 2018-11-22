@@ -1,12 +1,14 @@
 from datetime import datetime
 from urllib.parse import urlparse
 from time import time
+from datetime import datetime, timedelta
 import jwt
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db, login, app
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class User(UserMixin, db.Model):
@@ -42,6 +44,42 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def can_post(self):
+        if (
+            len(
+                Post.query.filter(
+                    Post.timestamp
+                    >= datetime.strftime(
+                        datetime.now() - timedelta(1), "%Y-%m-%d"
+                    )
+                )
+                .filter_by(author=self, deleted=0)
+                .all()
+            )
+            > app.config["USER_POSTS_PER_DAY"]
+        ):
+            return False
+        else:
+            return True
+
+    def can_comment(self):
+        if (
+            len(
+                Comment.query.filter(
+                    Comment.timestamp
+                    >= datetime.strftime(
+                        datetime.now() - timedelta(1), "%Y-%m-%d"
+                    )
+                )
+                .filter_by(author=self)
+                .all()
+            )
+            > app.config["USER_COMMENTS_PER_DAY"]
+        ):
+            return False
+        else:
+            return True
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -80,7 +118,7 @@ class Post(db.Model):
     def total_comments(self):
         return len(Comment.query.filter_by(post_id=self.id).all())
 
-    def set_score(self, gravity=1.8):
+    def update(self, gravity=1.8):
         datetime_difference = datetime.utcnow() - self.timestamp
         hours_passed = (
             datetime_difference.days * 24 + datetime_difference.seconds / 3600
