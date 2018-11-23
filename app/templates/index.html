@@ -1,34 +1,6 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-   <!-- {% if current_user.is_authenticated %}
-        <h3>Olá, {{ current_user.username }}!</h3>
-    {% else %}    
-        <h3>Olá, anónimo</h3>
-    {% endif %}-->
-
-    <ol start="{{ start_rank_num }}">
-        {% for post in posts %}
-            {% if post.url %}
-                <li><a target="_blank" href="{{ post.url }}">{{ post.title }}</a><em><span> (via {{ post.url_base }})</span></em></li>
-            {% else %}
-                <li><a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.title }}</a></li>
-            {% endif %}
-            <div>
-                    <span>{{ post.score }} pontos por <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a> {{ moment(post.timestamp).fromNow() }} | <a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.total_comments() }} Comentários</a></span>
-            </div>
-            <div>
-                    <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span>
-                    {%if current_user == post.author %}
-                    <span><a href="{{ url_for('delete', post_id=post.id)}}"> Apagar</a></span>
-                    {% endif %}
-            </div>
-            <br>
-        <br>
-        {% endfor %}
-    </ol>
-    {% if next_url %}
-    <a href="{{ next_url }}"> More</a>
-    {% endif %}
-    
-{% endblock %}
+<ol start="{{ start_rank_num }}">
+  {% for post in posts %} {% include '_post.html' %} {% endfor %}
+</ol>
+{% if next_url %} <a href="{{ next_url }}"> More</a> {% endif %} {% endblock %}
