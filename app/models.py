@@ -50,9 +50,7 @@ class User(UserMixin, db.Model):
             len(
                 Post.query.filter(
                     Post.timestamp
-                    >= datetime.strftime(
-                        datetime.now() - timedelta(1), "%Y-%m-%d"
-                    )
+                    >= datetime.strftime(datetime.now(), "%Y-%m-%d")
                 )
                 .filter_by(author=self, deleted=0)
                 .all()
@@ -68,9 +66,7 @@ class User(UserMixin, db.Model):
             len(
                 Comment.query.filter(
                     Comment.timestamp
-                    >= datetime.strftime(
-                        datetime.now() - timedelta(1), "%Y-%m-%d"
-                    )
+                    >= datetime.strftime(datetime.now(), "%Y-%m-%d")
                 )
                 .filter_by(author=self)
                 .all()
@@ -115,6 +111,10 @@ class Post(db.Model):
     def delete_post(self):
         self.deleted = 1
 
+    def update_votes(self):
+        self.score += 1
+        self.author.karma += 1
+
     def total_comments(self):
         return len(Comment.query.filter_by(post_id=self.id).all())
 
@@ -138,6 +138,15 @@ class Vote(db.Model):
         return f"<User: {self.user_id} Post: {self.post_id}>"
 
 
+class Comment_Vote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    comment_id = db.Column(db.Integer, db.ForeignKey("comment.id"))
+
+    def __repr__(self):
+        return f"<User: {self.user_id} Post: {self.comment_id}>"
+
+
 class Comment(db.Model):
     _N = 6
 
@@ -156,6 +165,18 @@ class Comment(db.Model):
     thread_timestamp = db.Column(
         db.DateTime, index=True, default=datetime.utcnow()
     )
+    score = db.Column(db.Integer, default=0)
+    thread_score = db.Column(db.Integer, default=0)
+
+    def update_votes(self):
+        self.score += 1
+        if self.parent_id is None:
+            self.thread_score = self.score
+            for child_comment in Comment.query.filter(
+                Comment.path.like(self.path + "%")
+            ):
+                child_comment.thread_score = self.thread_score
+                db.session.commit()
 
     def save(self):
         db.session.add(self)

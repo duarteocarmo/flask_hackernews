@@ -14,21 +14,22 @@ from app.forms import (
     ResetPasswordRequestForm,
     ResetPasswordForm,
 )
-from app.models import Comment, Post, User, Vote
+from app.models import Comment, Post, User, Vote, Comment_Vote
 from app.mail import send_password_reset_email
 
-
-# TODO upvote comments
-# TODO delete comments
-# TODO comment sort by score
-# TODO login page does not redirect to previous (commenting example)
+# NOW
 # TODO blueprints
-# TODO review methods
-# TODO prepare raw english version open sourced.
+
+# POSTPONED
+# TODO login page does not redirect to previous (commenting example)
 
 
-@app.route("/", methods=["GET", "POST"])
-@app.route("/index", methods=["GET", "POST"])
+def redirect_url(default="index"):
+    return request.args.get("next") or request.referrer or url_for(default)
+
+
+@app.route("/", methods=["GET"])
+@app.route("/index", methods=["GET"])
 def index():
     # TODO optimize this rendering
     for post in Post.query.filter_by(deleted=0).all():
@@ -57,7 +58,7 @@ def index():
     )
 
 
-@app.route("/newest", methods=["GET", "POST"])
+@app.route("/newest", methods=["GET"])
 def new():
     for post in Post.query.all():
         post.update()
@@ -174,44 +175,14 @@ def submit():
     return render_template("submit.html", title="Submit", form=form)
 
 
-@app.route("/upvote/<post_id>", methods=["GET"])
-@login_required
-def upvote(post_id):
-    post_to_upvote = Post.query.filter_by(id=post_id).first_or_404()
-    vote_query = Vote.query.filter_by(
-        user_id=current_user.id, post_id=post_to_upvote.id
-    ).first()
-    if vote_query is not None:
-        return redirect(url_for("index"))
-    else:
-        post_to_upvote.score += 1
-        post_to_upvote.author.karma += 1
-        vote = Vote(user_id=current_user.id, post_id=post_to_upvote.id)
-        db.session.add(vote)
-        db.session.commit()
-        return redirect(url_for("index"))
-
-
-@app.route("/delete/<post_id>", methods=["GET"])
-@login_required
-def delete(post_id):
-    post = Post.query.filter_by(id=post_id).first_or_404()
-    if current_user == post.author:
-        post.delete_post()
-        db.session.commit()
-        return redirect(url_for("index"))
-    else:
-        return render_template("404.html"), 404
-
-
 @app.route("/post/<post_id>", methods=["GET", "POST"])
 def post_page(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
 
     comments = (
         Comment.query.filter_by(post_id=post.id)
-        .order_by(Comment.thread_timestamp.desc(), Comment.path.asc())
-        .all()
+        # .order_by(Comment.thread_timestamp.desc(), Comment.path.asc())
+        .order_by(Comment.thread_score.desc(), Comment.path.asc()).all()
     )
     form = CommentForm()
     if form.validate_on_submit():
@@ -236,6 +207,48 @@ def post_page(post_id):
     return render_template(
         "post.html", post=post, form=form, comments=comments, title=post.title
     )
+
+
+@app.route("/upvote/<post_id>", methods=["GET"])
+@login_required
+def upvote(post_id):
+    post_to_upvote = Post.query.filter_by(id=post_id).first_or_404()
+    vote_query = Vote.query.filter_by(
+        user_id=current_user.id, post_id=post_to_upvote.id
+    ).first()
+    if vote_query is not None:
+        flash("You already voted in this post.")
+    else:
+        post_to_upvote.update_votes()
+        vote = Vote(user_id=current_user.id, post_id=post_to_upvote.id)
+        db.session.add(vote)
+        db.session.commit()
+
+    return redirect(redirect_url())
+
+
+@app.route("/delete/post/<post_id>", methods=["GET"])
+@login_required
+def delete_post(post_id):
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    if current_user == post.author:
+        post.delete_post()
+        db.session.commit()
+        return redirect(redirect_url())
+    else:
+        return render_template("404.html"), 404
+
+
+@app.route("/delete/comment/<comment_id>", methods=["GET"])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first_or_404()
+    if current_user == comment.author:
+        comment.text = "[Deleted]"
+        db.session.commit()
+        return redirect(redirect_url())
+    else:
+        return render_template("404.html"), 404
 
 
 @app.route("/submissions/<username>", methods=["GET"])
@@ -296,3 +309,23 @@ def reset_password(token):
         flash("Your password has been reset.")
         return redirect(url_for("login"))
     return render_template("reset_password.html", form=form)
+
+
+@app.route("/upvote_comment/<comment_id>", methods=["GET"])
+@login_required
+def upvote_comment(comment_id):
+    comment_to_upvote = Comment.query.filter_by(id=comment_id).first_or_404()
+    vote_query = Comment_Vote.query.filter_by(
+        user_id=current_user.id, comment_id=comment_to_upvote.id
+    ).first()
+    if vote_query is not None:
+        flash("You already voted in this comment.")
+    else:
+        comment_to_upvote.update_votes()
+        vote = Comment_Vote(
+            user_id=current_user.id, comment_id=comment_to_upvote.id
+        )
+        db.session.add(vote)
+        db.session.commit()
+
+    return redirect(redirect_url())
