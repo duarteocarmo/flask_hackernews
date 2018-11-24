@@ -8,9 +8,9 @@
     {% if user.karma  %}<li>Karma: {{ user.karma}}</li>{% endif %}
     {% if user == current_user %}<li>Email: {{ user.email }}</li>{% endif %}  
 </ul>
-<p><a href="{{ url_for('user_submissions', username=user.username)}}">Posts</a></p>
+<p><a href="{{ url_for('main.user_submissions', username=user.username)}}">Posts</a></p>
 {% if user == current_user %}    
-    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+    <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
 {% endif %}
 
 {% endblock %}

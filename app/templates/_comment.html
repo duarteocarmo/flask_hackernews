@@ -4,20 +4,20 @@
         <td width="{{ comment.level() * 40}}" height="1"></td>
         <td valign="top">
             <center>
-                <a href="{{url_for('upvote_comment', comment_id=comment.id)}}"> <div>Vota</div> </a>
+                <a href="{{url_for('main.upvote_comment', comment_id=comment.id)}}"> <div>Vota</div> </a>
             <a href=""> <div> </div> </a>
             </center>
         </td>
         <td>
-            <div><span><a href="{{ url_for('user', username=comment.author.username) }}">{{ comment.author.username }}</a></span><span> {{ moment(comment.timestamp).fromNow() }}</span></div>
+            <div><span><a href="{{ url_for('main.user', username=comment.author.username) }}">{{ comment.author.username }}</a></span><span> {{ moment(comment.timestamp).fromNow() }}</span></div>
             <div>
                     
                     {% filter markdown %}{{ comment.text }}{% endfilter %}
                     
             <div>
-                <p><a href="{{url_for('reply', comment_id=comment.id)}}"><u>Reply</u></a></p>
+                <p><a href="{{url_for('main.reply', comment_id=comment.id)}}"><u>Reply</u></a></p>
                 {%if current_user == comment.author %}
-                <p><a href="{{url_for('delete_comment', comment_id=comment.id)}}">Delete</a></p>
+                <p><a href="{{url_for('main.delete_comment', comment_id=comment.id)}}">Delete</a></p>
                 {% endif %}
                 <p>Score: {{ comment.score }}</p>
                 <p>Thread Score: {{ comment.thread_score }}</p>

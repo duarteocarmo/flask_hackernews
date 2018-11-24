@@ -1,14 +1,13 @@
 from datetime import datetime
 from urllib.parse import urlparse
 from time import time
-from datetime import datetime, timedelta
 import jwt
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import db, login, app
-from sqlalchemy.ext.hybrid import hybrid_property
+from app import db, login
+from flask import current_app
 
 
 class User(UserMixin, db.Model):
@@ -25,7 +24,7 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {"reset_password": self.id, "exp": time() + expires_in},
-            app.config["SECRET_KEY"],
+            current_app.config["SECRET_KEY"],
             algorithm="HS256",
         ).decode("utf-8")
 
@@ -33,7 +32,7 @@ class User(UserMixin, db.Model):
     def verify_reset_password_token(token):
         try:
             id = jwt.decode(
-                token, app.config["SECRET_KEY"], algorithms=["HS256"]
+                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
             )["reset_password"]
         except Exception:
             return
@@ -55,7 +54,7 @@ class User(UserMixin, db.Model):
                 .filter_by(author=self, deleted=0)
                 .all()
             )
-            > app.config["USER_POSTS_PER_DAY"]
+            > current_app.config["USER_POSTS_PER_DAY"]
         ):
             return False
         else:
@@ -71,7 +70,7 @@ class User(UserMixin, db.Model):
                 .filter_by(author=self)
                 .all()
             )
-            > app.config["USER_COMMENTS_PER_DAY"]
+            > current_app.config["USER_COMMENTS_PER_DAY"]
         ):
             return False
         else:

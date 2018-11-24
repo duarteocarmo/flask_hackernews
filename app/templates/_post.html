@@ -7,26 +7,26 @@
 </li>
 {% else %}
 <li>
-  <a href="{{ url_for('post_page', post_id=post.id)}}">{{ post.title }}</a>
+  <a href="{{ url_for('main.post_page', post_id=post.id)}}">{{ post.title }}</a>
 </li>
 {% endif %}
 <div>
   <span
     >{{ post.score }} pontos por
-    <a href="{{ url_for('user', username=post.author.username) }}">{{
+    <a href="{{ url_for('main.user', username=post.author.username) }}">{{
       post.author.username
     }}</a>
     {{ moment(post.timestamp).fromNow() }} |
-    <a href="{{ url_for('post_page', post_id=post.id)}}"
+    <a href="{{ url_for('main.post_page', post_id=post.id)}}"
       >{{ post.total_comments() }} Comentários</a
     ></span
   >
 </div>
 <div>
-  <span><a href="{{ url_for('upvote', post_id=post.id)}}">Votar</a></span> {%if
+  <span><a href="{{ url_for('main.upvote', post_id=post.id)}}">Votar</a></span> {%if
   current_user == post.author %}
   <span
-    ><a href="{{ url_for('delete_post', post_id=post.id)}}"> Apagar</a></span
+    ><a href="{{ url_for('main.delete_post', post_id=post.id)}}"> Apagar</a></span
   >
   {% endif %}
 </div>
