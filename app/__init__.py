@@ -15,7 +15,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 login.login_view = "login"
-login.login_message = ('Please log in to access this page.')
+login.login_message = "Please log in to access this page."
 mail = Mail()
 moment = Moment()
 
@@ -32,12 +32,15 @@ def create_app(config_class=Config):
     markdown = Markdown(app)
 
     from app.errors import bp as errors_bp
+
     app.register_blueprint(errors_bp)
 
     from app.auth import bp as auth_bp
+
     app.register_blueprint(auth_bp, url_prefix="/auth")
 
     from app.main import bp as main_bp
+
     app.register_blueprint(main_bp)
 
     if not app.debug:

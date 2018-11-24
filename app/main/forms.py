@@ -36,7 +36,9 @@ class EditProfileForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired(), Length(min=1, max=80)])
+    title = StringField(
+        "Title", validators=[DataRequired(), Length(min=1, max=80)]
+    )
     text = TextAreaField(
         "Submission Text", validators=[Optional(), Length(min=1, max=280)]
     )
@@ -57,4 +59,3 @@ class CommentForm(FlaskForm):
         "Comment Text", validators=[DataRequired(), Length(min=1, max=280)]
     )
     submit = SubmitField("Add Comment")
-

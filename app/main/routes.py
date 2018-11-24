@@ -1,6 +1,13 @@
 from datetime import datetime
 
-from flask import flash, redirect, render_template, request, url_for, current_app
+from flask import (
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+    current_app,
+)
 from flask_login import current_user, login_required
 
 from app import db
@@ -31,7 +38,9 @@ def index():
     )
 
     start_rank_num = current_app.config["POSTS_PER_PAGE"] * (page - 1) + 1
-    next_url = url_for("main.index", page=posts.next_num) if posts.has_next else None
+    next_url = (
+        url_for("main.index", page=posts.next_num) if posts.has_next else None
+    )
 
     return render_template(
         "index.html",
@@ -55,7 +64,9 @@ def new():
     )
 
     start_rank_num = current_app.config["POSTS_PER_PAGE"] * (page - 1) + 1
-    next_url = url_for("main.new", page=posts.next_num) if posts.has_next else None
+    next_url = (
+        url_for("main.new", page=posts.next_num) if posts.has_next else None
+    )
 
     return render_template(
         "index.html",
@@ -68,7 +79,9 @@ def new():
 @bp.route("/user/<username>", methods=["GET"])
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template("user.html", user=user, title=f"Profile: {username}")
+    return render_template(
+        "user.html", user=user, title=f"Profile: {username}"
+    )
 
 
 @bp.route("/edit_profile", methods=["GET", "POST"])
@@ -86,7 +99,9 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
         form.email.data = current_user.email
-    return render_template("edit_profile.html", title="Edit Profile", form=form)
+    return render_template(
+        "edit_profile.html", title="Edit Profile", form=form
+    )
 
 
 @bp.route("/submit", methods=["GET", "POST"])
@@ -194,7 +209,9 @@ def delete_comment(comment_id):
 @bp.route("/submissions/<username>", methods=["GET"])
 def user_submissions(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user, deleted=0).order_by(Post.timestamp.desc())
+    posts = Post.query.filter_by(author=user, deleted=0).order_by(
+        Post.timestamp.desc()
+    )
     return render_template("index.html", posts=posts)
 
 
@@ -228,7 +245,9 @@ def upvote_comment(comment_id):
         flash("You already voted in this comment.")
     else:
         comment_to_upvote.update_votes()
-        vote = Comment_Vote(user_id=current_user.id, comment_id=comment_to_upvote.id)
+        vote = Comment_Vote(
+            user_id=current_user.id, comment_id=comment_to_upvote.id
+        )
         db.session.add(vote)
         db.session.commit()
 
