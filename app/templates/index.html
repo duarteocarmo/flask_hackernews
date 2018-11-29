@@ -1,11 +1,11 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
-
-
-<ol start="{{ start_rank_num }}">
-  {% for post in posts %} {% include '_post.html' %} {% endfor %}
-</ol>
-{% if next_url %} <a href="{{ next_url }}"> More</a> {% endif %} 
-
+<table border="0" cellpadding="0" cellspacing="0" class="itemlist">
+{% for post in posts %}
+  {% include '_post.html' %}
+{% endfor %}
+</table>
+{% if next_url %}
+  <a href="{{ next_url }}">Ver mais</a>
+{% endif %}
 {% endblock %}

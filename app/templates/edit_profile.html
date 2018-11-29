@@ -1,30 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit Profile</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(cols=50, rows=4) }}<br>
-            {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+<form action="" method="post">
+    <table border="0">
+    {{ form.hidden_tag() }}
+    <tr>
+        <td valign="top">{{ form.username.label }}:</td>
+        <td>{{ form.username(size=32) }}</td>
+        {% for error in form.username.errors %}
+            <td></td><span style="color: red;">{{ error }}</span></td>
+        {% endfor %} 
+    </tr>
+    <tr>
+        <td valign="top">{{ form.about_me.label }}:</td>
+        <td>{{ form.about_me(cols=50, rows=4) }}</td>
+        {% for error in form.about_me.errors %}
+            <td></td><span style="color: red;">{{ error }}</span></td>
+        {% endfor %} 
+        </tr>
+    <tr>
+    <tr>
+        <td valign="top">{{ form.email.label }}:</td>
+        <td>{{ form.email(size=32) }}</td>
+        {% for error in form.email.errors %}
+            <td></td><span style="color: red;">{{ error }}</span></td>
+        {% endfor %} 
+    </tr>
+    <tr>
+        <td valign="top"><p>{{ form.submit() }}</p></td>
+    </tr>
+    </table>
+</form>
 {% endblock %}
+
+

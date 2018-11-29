@@ -12,10 +12,10 @@ from app.models import User
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    about_me = TextAreaField("About me", validators=[Length(min=0, max=140)])
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    submit = SubmitField("Submit")
+    username = StringField("nome de utilizador", validators=[DataRequired()])
+    about_me = TextAreaField("sobre mim", validators=[Length(min=0, max=140)])
+    email = StringField("email", validators=[DataRequired(), Email()])
+    submit = SubmitField("submeter")
 
     def __init__(self, original_username, original_email, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
@@ -37,13 +37,13 @@ class EditProfileForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField(
-        "Title", validators=[DataRequired(), Length(min=1, max=80)]
+        "titulo", validators=[DataRequired(), Length(min=1, max=80)]
     )
     text = TextAreaField(
-        "Submission Text", validators=[Optional(), Length(min=1, max=280)]
+        "texto", validators=[Optional(), Length(min=1, max=280)]
     )
-    url = StringField("url", validators=[Optional(), URL()])
-    submit = SubmitField("Submit")
+    url = StringField("link", validators=[Optional(), URL()])
+    submit = SubmitField("submeter")
 
     def validate_text(self, text):
         if len(self.url.data) > 0:
@@ -58,4 +58,4 @@ class CommentForm(FlaskForm):
     text = TextAreaField(
         "Comment Text", validators=[DataRequired(), Length(min=1, max=280)]
     )
-    submit = SubmitField("Add Comment")
+    submit = SubmitField("Comentar")

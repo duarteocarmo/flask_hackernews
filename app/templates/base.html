@@ -1,42 +1,83 @@
-<html>
-    <head>
-            <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<head>
+  {{moment.include_jquery()}}
+  {{moment.include_moment()}}
+  {{moment.lang("pt")}}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <title>DevTuga</title>
+</head>
+<body>
+  <center>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#ffffff">
+      <tr>
+        <td bgcolor="#D12626">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+            <tr class="banner-top">
+              <td style="width:18px;padding-right:4px;padding-left:10px">
+                <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" width="18"
+                    height="18" style="border:1px white solid;" /></a>
+              </td>
+              <td style="line-height:12pt; height:10px;padding-left:10px">
+                <span class="pagetop">
+                  <a href="{{ url_for('main.index') }}">Home</a>
+                  <a href="{{ url_for('main.new') }}">Recentes</a>
+                  <a href="{{ url_for('main.submit') }}">Submeter</a>
+                </span>
+              </td>
+              <td style="text-align:right;padding-right:10px;padding-left:10px">
+                <span class="pagetop">
 
-        {{ moment.include_jquery() }}
-        {{ moment.include_moment() }}
-        {{ moment.lang("pt") }}
-
-        {% if title %}
-        <title>{{ title }} - Dev.pt</title>
-        {% else %}
-        <title>Welcome to Dev.pt</title>
-        {% endif %}
-    </head>
-    <body>
-        <div>
-            Dev.pt:
-            <a href="{{ url_for('main.index') }}">Home</a>
-            <a href="{{ url_for('main.new') }}">New</a>
-            <a href="{{ url_for('main.submit') }}">Submeter</a>
-            {% if current_user.is_anonymous %}
-            <a href="{{ url_for('auth.login') }}">Login</a>
-            {% else %}
-            <a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a>
-            <a href="{{ url_for('auth.logout') }}">Logout</a>
-            {% endif %}
-        </div>
-        <hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </body>
+                  {% if current_user.is_anonymous %}
+                  <a href="{{ url_for('auth.login') }}">Entrar</a>
+                  {% else %}
+                  <a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a>
+                  <a href="{{ url_for('auth.logout') }}">Sair</a>
+                  {% endif %}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr style="height:10px"></tr>
+      <tr>
+        <td>
+          {% endwith %}
+          {% block content %}
+          {% endblock %}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="" height="10" width="0" />
+          <table width="100%" cellspacing="0" cellpadding="1">
+            <tr>
+              <td bgcolor="#D12626"></td>
+            </tr>
+          </table>
+          <br />
+          <center>
+            <span class="yclinks"><a href="">Sobre o devTuga</a> |
+              <a href="">Contacta-nos</a></span><br /><br />
+          </center>
+        </td>
+      </tr>
+    </table>
+  </center>
+</body>
 </html>
+
+
 
 

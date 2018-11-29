@@ -1,34 +1,39 @@
-{% if post.url %}
-<li>
-  <a target="_blank" href="{{ post.url }}">{{ post.title }}</a
-  ><em
-    ><span> (via {{ post.url_base }})</span></em
-  >
-</li>
-{% else %}
-<li>
-  <a href="{{ url_for('main.post_page', post_id=post.id)}}">{{ post.title }}</a>
-</li>
-{% endif %}
-<div>
-  <span
-    >{{ post.score }} pontos por
-    <a href="{{ url_for('main.user', username=post.author.username) }}">{{
-      post.author.username
-    }}</a>
-    {{ moment(post.timestamp).fromNow() }} |
-    <a href="{{ url_for('main.post_page', post_id=post.id)}}"
-      >{{ post.total_comments() }} Comentários</a
-    ></span
-  >
-</div>
-<div>
-  <span><a href="{{ url_for('main.upvote', post_id=post.id)}}">Votar</a></span> {%if
-  current_user == post.author %}
-  <span
-    ><a href="{{ url_for('main.delete_post', post_id=post.id)}}"> Apagar</a></span
-  >
-  {% endif %}
-</div>
-<br />
-<br />
+<tr class="athing" id="">
+  <td align="right" valign="top" class="title" style="padding-right:4px;">
+    <span class="rank">1</span>
+  </td>
+  <td valign="top" class="votelinks">
+    <center>
+      <a id="" onclick="" href="{{ url_for('main.upvote', post_id=post.id)}}">
+        <div class="votearrow" title="votar"></div>
+      </a>
+    </center>
+  </td>
+  <td align="left" valign="top" class="title" style="padding-left:4px;padding-right:4px;">
+    <span class="rank">{{ post.score }}</span>
+  </td>
+  <td class="title">
+    {% if post.url %}
+    <a target="_blank" href="{{ post.url }}" class="storylink">{{ post.title }}</a>
+    <span class="sitebit comhead">
+      
+        <span class="sitestr">(via {{ post.url_base }})</span>
+      
+    </span>
+    {% else %}
+    <a target="" href="{{ url_for('main.post_page', post_id=post.id)}}" class="storylink">{{ post.title }}</a>
+    {% endif %}
+  </td>
+</tr>
+<tr>
+  <td colspan="3"></td>
+  <td class="subtext">por
+    <a href="{{ url_for('main.user', username=post.author.username) }}" class="hnuser">{{post.author.username}}</a>
+    <span class="age">{{ moment(post.timestamp).fromNow() }}</span> - 
+    <a href="{{ url_for('main.post_page', post_id=post.id)}}">{{ post.total_comments() }} comentários</a>
+    {%if current_user == post.author %}
+      - <a href="{{ url_for('main.delete_post', post_id=post.id)}}"> apagar</a>
+    {% endif %}
+  </td>
+</tr>
+<tr class="spacer" style="height:5px"></tr>

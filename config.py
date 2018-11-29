@@ -18,6 +18,6 @@ class Config(object):
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     POSTS_PER_PAGE = 5
-    TOTAL_POSTS = 100
+    TOTAL_POSTS = 30
     USER_POSTS_PER_DAY = 2
     USER_COMMENTS_PER_DAY = 15

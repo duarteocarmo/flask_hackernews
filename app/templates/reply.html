@@ -1,16 +1,22 @@
-{% extends "base.html" %} {% block content %} {% include '_comment.html' %}
-
-<br />
-
-<form action="" method="post">
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.text.label }}<br />
-    {{ form.text(cols=50, rows=4) }}<br />
-    {% for error in form.text.errors %}
-    <span style="color: red;">[{{ error }}]</span> {% endfor %}
-  </p>
-  <p>{{ form.submit() }}</p>
-</form>
-
+{% extends "base.html" %} 
+{% block content %} 
+<table class="fatitem" border="0">
+{% include '_comment.html' %}
+<tr style="height:10px"></tr>
+<tr>
+  
+  <td>
+    <form action="" method="post">
+        {{ form.hidden_tag() }} </br>
+      {{ form.text(cols=50, rows=4) }}</br>
+      {% for error in form.text.errors %}
+      <span style="color: red;">[{{ error }}]</span> 
+      {% endfor %}
+      <br>
+      <br>
+      {{ form.submit() }}
+    </form>
+  </td>
+</tr>
+</table>
 {% endblock %}

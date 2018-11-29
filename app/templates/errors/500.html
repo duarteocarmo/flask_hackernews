@@ -1,7 +1,8 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>An unexpected error has occurred</h1>
-    <p>The administrator has been notified. Sorry for the inconvenience!</p>
-    <p><a href="{{ url_for('main.index') }}">Home</a></p>
-{% endblock %}
+<center>
+    <p>O nosso codigo:</p>
+    <img src="{{ url_for('static', filename='crash.gif') }}">
+    <p>Nós amanhã:</p>
+    <img src="{{ url_for('static', filename='hacker.gif') }}">
+    <p>Divertido. Volta mas é para a <a href="{{ url_for('main.index') }}">pagina inicial.</a></p>    
+</center>
+    

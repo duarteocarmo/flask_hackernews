@@ -1,19 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<ul>
-    <li>Utilizador: {{ user.username }}</li>
-    {% if user.about_me  %}<li>Sobre mim: {{ user.about_me}}</li>{% endif %}
-    {% if user.timestamp  %}<li>Criado: {{ moment(user.timestamp).format('LL') }}</li>{% endif %}
-    {% if user.karma  %}<li>Karma: {{ user.karma}}</li>{% endif %}
-    {% if user == current_user %}<li>Email: {{ user.email }}</li>{% endif %}  
-</ul>
-<p><a href="{{ url_for('main.user_submissions', username=user.username)}}">Posts</a></p>
-{% if user == current_user %}    
-    <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
-{% endif %}
-
+<table border="0">
+    <tr class='athing'>
+        <td valign="top">utilizador:</td>
+        <td timestamp="1326108687"><a href="" class="hnuser">{{ user.username }}</a></td>
+    </tr>
+    {% if user.timestamp %}
+        <tr>
+            <td valign="top">criado:</td>
+            <td><a href="">{{ moment(user.timestamp).format('LL') }}</a></td>
+        </tr>
+    {% endif %}
+    {% if user.karma %}
+        <tr>
+            <td valign="top">karma:</td>
+            <td>{{ user.karma}}</td>
+        </tr>
+    {% endif %}
+    {% if user.about_me %}
+        <tr>
+            <td valign="top">sobre:</td>
+            <td>{{ user.about_me}}</td>
+        </tr>
+    {% endif %}
+    {% if user == current_user %}
+        <tr>
+            <td valign="top">email:</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td></td>
+        <td><a href="{{ url_for('main.user_submissions', username=user.username)}}"><u>submissões</u></a></td>
+    </tr>
+    {% if user == current_user %}
+        <tr>
+            <td></td>
+            <td><a href="{{ url_for('main.edit_profile') }}"><u>editar perfil</u></a></td>
+        </tr>
+    {% endif %}
+</table>
 {% endblock %}
+
+
 
 
 

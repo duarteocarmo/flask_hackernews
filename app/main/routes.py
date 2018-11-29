@@ -15,6 +15,11 @@ from app.main.forms import CommentForm, EditProfileForm, PostForm
 from app.models import Comment, Post, User, Vote, Comment_Vote
 from app.main import bp
 
+# TODO post filtering by source
+# TODO fix rankings
+# TODO page titles
+# TODO report 
+
 
 def redirect_url(default="main.index"):
     return request.args.get("next") or request.referrer or url_for(default)
@@ -141,8 +146,10 @@ def post_page(post_id):
     )
     form = CommentForm()
     if form.validate_on_submit():
+        print("HERE")
         if current_user.is_authenticated:
             if current_user.can_comment():
+                print("HERE")
                 comment = Comment(
                     text=form.text.data,
                     author=current_user,

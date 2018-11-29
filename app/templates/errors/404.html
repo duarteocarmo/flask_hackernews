@@ -1,6 +1,7 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>File Not Found</h1>
-    <p><a href="{{ url_for('main.index') }}">Back</a></p>
-{% endblock %}
+<center>
+    <p>Não encontrámos esse ficheiro:</p>
+    <img src="{{ url_for('static', filename='404.gif') }}">
+    
+    <p>Volta para a <a href="{{ url_for('main.index') }}">pagina inicial.</a></p>    
+</center>
+    
