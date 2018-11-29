@@ -14,7 +14,7 @@ from flask_mail import Mail
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
-login.login_view = "login"
+login.login_view = "auth.login"
 login.login_message = "Please log in to access this page."
 mail = Mail()
 moment = Moment()
