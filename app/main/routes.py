@@ -98,7 +98,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         current_user.email = form.email.data
         db.session.commit()
-        flash("Your changes have been saved.")
+        flash("Guardámos as tuas edições.")
         return redirect(url_for("main.edit_profile"))
     elif request.method == "GET":
         form.username.data = current_user.username
@@ -124,11 +124,11 @@ def submit():
             post.format_post(form.url.data)
             db.session.add(post)
             db.session.commit()
-            flash("Congratulations, your post was published!")
+            flash("Parabéns! O teu post foi publicado!")
             return redirect(url_for("main.post_page", post_id=post.id))
         else:
             flash(
-                f"Sorry, you can only post {current_app.config['USER_POSTS_PER_DAY']} times a day"
+                f"Desculpa, só podes postar {current_app.config['USER_POSTS_PER_DAY']} vezes por dia."
             )
             return redirect(url_for("main.index"))
 
@@ -161,7 +161,7 @@ def post_page(post_id):
                 return redirect(url_for("main.post_page", post_id=post.id))
             else:
                 flash(
-                    f"You can only commment {current_app.config['USER_COMMENTS_PER_DAY']} times a day."
+                    f"Só podes comentar {current_app.config['USER_COMMENTS_PER_DAY']} vezes por dia."
                 )
         else:
             return redirect(url_for("auth.login"))
@@ -179,7 +179,7 @@ def upvote(post_id):
         user_id=current_user.id, post_id=post_to_upvote.id
     ).first()
     if vote_query is not None:
-        flash("You already voted in this post.")
+        flash("Já votaste neste post")
     else:
         post_to_upvote.update_votes()
         vote = Vote(user_id=current_user.id, post_id=post_to_upvote.id)
@@ -249,7 +249,7 @@ def upvote_comment(comment_id):
         user_id=current_user.id, comment_id=comment_to_upvote.id
     ).first()
     if vote_query is not None:
-        flash("You already voted in this comment.")
+        flash("Já votaste neste comentário.")
     else:
         comment_to_upvote.update_votes()
         vote = Comment_Vote(
