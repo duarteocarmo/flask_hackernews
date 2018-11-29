@@ -93,7 +93,7 @@ and (max-width : 750px) {
   body { padding: 0; margin: 0; width: 100%; -webkit-text-size-adjust: none; }
   td { height: inherit !important; }
   .title, .comment { font-size: inherit;  }
-  span.pagetop { display: block; margin: 3px 5px; font-size: 12px; }
+  span.pagetop { display: block; margin: 3px 5px; font-size: 16px; }
   span.pagetop b { display: block; font-size: 15px; }
   table.comment-tree .comment a { display: inline-block; max-width: 200px; overflow: hidden; white-space: nowrap;
     text-overflow: ellipsis; vertical-align:top; }
@@ -118,8 +118,8 @@ and (max-width : 750px) {
   img[src='s.gif'][width='760'] { width: 228px; }
   img[src='s.gif'][width='800'] { width: 240px; }
   img[src='s.gif'][width='840'] { width: 252px; }
-  .title { font-size: 11pt; line-height: 14pt;  }
-  .subtext { font-size: 9pt; }
+  .title { font-size: 12pt; line-height: 14pt;  }
+  .subtext { font-size: 10pt; }
   .itemlist { padding-right: 5px;}
   .votearrow { transform: scale(1.3,1.3); margin-right: 6px; }
   .votearrow.rotate180 {

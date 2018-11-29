@@ -18,7 +18,9 @@ from app.main import bp
 # TODO post filtering by source
 # TODO fix rankings
 # TODO page titles
-# TODO report 
+# TODO report content
+# TODO fix headers
+# TODO optimize for mobile
 
 
 def redirect_url(default="main.index"):
