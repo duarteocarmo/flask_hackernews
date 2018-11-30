@@ -17,7 +17,7 @@
     <a target="_blank" href="{{ post.url }}" class="storylink">{{ post.title }}</a>
     <span class="sitebit comhead">
       
-        <span class="sitestr">(via {{ post.url_base }})</span>
+        <a href="{{ url_for('main.posts_from_source', url_base=post.url_base) }}"><span class="sitestr">(via {{ post.url_base }})</span></a>
       
     </span>
     {% else %}

@@ -83,6 +83,36 @@ def new():
     )
 
 
+@bp.route("/source/<url_base>", methods=["GET"])
+def posts_from_source(url_base):
+    for post in Post.query.all():
+        post.update()
+        db.session.commit()
+
+    page = request.args.get("page", 1, type=int)
+    posts = (
+        Post.query.filter_by(deleted=0, url_base=url_base)
+        .order_by(Post.timestamp.desc())
+        .paginate(page, current_app.config["POSTS_PER_PAGE"], True)
+    )
+
+    start_rank_num = current_app.config["POSTS_PER_PAGE"] * (page - 1) + 1
+    next_url = (
+        url_for(
+            "main.posts_from_source", url_base=url_base, page=posts.next_num
+        )
+        if posts.has_next
+        else None
+    )
+
+    return render_template(
+        "index.html",
+        posts=posts.items,
+        next_url=next_url,
+        start_rank_num=start_rank_num,
+    )
+
+
 @bp.route("/user/<username>", methods=["GET"])
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
@@ -148,10 +178,8 @@ def post_page(post_id):
     )
     form = CommentForm()
     if form.validate_on_submit():
-        print("HERE")
         if current_user.is_authenticated:
             if current_user.can_comment():
-                print("HERE")
                 comment = Comment(
                     text=form.text.data,
                     author=current_user,
