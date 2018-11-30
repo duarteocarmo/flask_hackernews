@@ -7,7 +7,11 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400" rel="stylesheet" />
   <meta charset="UTF-8" />
-  <title>DevTuga</title>
+  {% if title %}
+    <title>Devtuga: {{ title }}</title>
+  {% else %}
+    <title>DevTuga</title>
+  {% endif %}
 </head>
 <body>
   <center>
