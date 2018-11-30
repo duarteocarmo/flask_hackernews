@@ -15,7 +15,6 @@ from app.main.forms import CommentForm, EditProfileForm, PostForm
 from app.models import Comment, Post, User, Vote, Comment_Vote
 from app.main import bp
 
-# TODO page titles
 # TODO report content
 # TODO fix headers
 # TODO optimize for mobile
@@ -80,6 +79,7 @@ def new():
         posts=posts.items,
         next_url=next_url,
         start_rank_num=start_rank_num,
+        title="recentes",
     )
 
 
@@ -108,15 +108,14 @@ def posts_from_source(url_base):
         posts=posts.items,
         next_url=next_url,
         start_rank_num=start_rank_num,
+        title=f"{url_base}",
     )
 
 
 @bp.route("/user/<username>", methods=["GET"])
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template(
-        "user.html", user=user, title=f"Profile: {username}"
-    )
+    return render_template("user.html", user=user, title=f"{username}")
 
 
 @bp.route("/edit_profile", methods=["GET", "POST"])
@@ -135,7 +134,7 @@ def edit_profile():
         form.about_me.data = current_user.about_me
         form.email.data = current_user.email
     return render_template(
-        "edit_profile.html", title="Edit Profile", form=form
+        "edit_profile.html", title="editar perfil", form=form
     )
 
 
@@ -162,7 +161,7 @@ def submit():
             )
             return redirect(url_for("main.index"))
 
-    return render_template("submit.html", title="Submit", form=form)
+    return render_template("submit.html", title="submeter", form=form)
 
 
 @bp.route("/post/<post_id>", methods=["GET", "POST"])
@@ -243,11 +242,29 @@ def delete_comment(comment_id):
 
 @bp.route("/submissions/<username>", methods=["GET"])
 def user_submissions(username):
+    update_renderings()
+
+    page = request.args.get("page", 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user, deleted=0).order_by(
-        Post.timestamp.desc()
+
+    posts = (
+        Post.query.filter_by(author=user, deleted=0)
+        .order_by(Post.timestamp.desc())
+        .paginate(page, current_app.config["POSTS_PER_PAGE"], True)
     )
-    return render_template("index.html", posts=posts)
+
+    start_rank_num = current_app.config["POSTS_PER_PAGE"] * (page - 1) + 1
+    next_url = (
+        url_for("main.index", page=posts.next_num) if posts.has_next else None
+    )
+
+    return render_template(
+        "index.html",
+        posts=posts.items,
+        next_url=next_url,
+        start_rank_num=start_rank_num,
+        title=f"{username} posts",
+    )
 
 
 @bp.route("/reply/<comment_id>", methods=["GET", "POST"])
@@ -266,7 +283,9 @@ def reply(comment_id):
         )
         comment.save()
         return redirect(url_for("main.post_page", post_id=parent.post_id))
-    return render_template("reply.html", comment=parent, form=form)
+    return render_template(
+        "reply.html", comment=parent, form=form, title="responder"
+    )
 
 
 @bp.route("/upvote_comment/<comment_id>", methods=["GET"])

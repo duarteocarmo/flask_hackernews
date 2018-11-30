@@ -17,7 +17,7 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS") is not None
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    POSTS_PER_PAGE = 5
+    POSTS_PER_PAGE = 20
     TOTAL_POSTS = 30
     USER_POSTS_PER_DAY = 2
     USER_COMMENTS_PER_DAY = 15
