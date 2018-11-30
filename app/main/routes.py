@@ -15,8 +15,6 @@ from app.main.forms import CommentForm, EditProfileForm, PostForm
 from app.models import Comment, Post, User, Vote, Comment_Vote
 from app.main import bp
 
-# TODO post filtering by source
-# TODO fix rankings
 # TODO page titles
 # TODO report content
 # TODO fix headers
@@ -27,13 +25,17 @@ def redirect_url(default="main.index"):
     return request.args.get("next") or request.referrer or url_for(default)
 
 
-@bp.route("/", methods=["GET"])
-@bp.route("/index", methods=["GET"])
-def index():
+def update_renderings():
     # TODO optimize this rendering
     for post in Post.query.filter_by(deleted=0).all():
         post.update()
         db.session.commit()
+
+
+@bp.route("/", methods=["GET"])
+@bp.route("/index", methods=["GET"])
+def index():
+    update_renderings()
 
     page = request.args.get("page", 1, type=int)
     posts = (
@@ -59,9 +61,7 @@ def index():
 
 @bp.route("/newest", methods=["GET"])
 def new():
-    for post in Post.query.all():
-        post.update()
-        db.session.commit()
+    update_renderings()
 
     page = request.args.get("page", 1, type=int)
     posts = (
@@ -85,9 +85,7 @@ def new():
 
 @bp.route("/source/<url_base>", methods=["GET"])
 def posts_from_source(url_base):
-    for post in Post.query.all():
-        post.update()
-        db.session.commit()
+    update_renderings()
 
     page = request.args.get("page", 1, type=int)
     posts = (

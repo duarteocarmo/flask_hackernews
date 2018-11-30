@@ -1,6 +1,8 @@
 <tr class="athing" id="">
   <td align="right" valign="top" class="title" style="padding-right:4px;">
-    <span class="rank">1</span>
+    {% if count %}
+    <span class="rank">{{ count[0] }}</span>
+    {% endif %}
   </td>
   <td valign="top" class="votelinks">
     <center>
