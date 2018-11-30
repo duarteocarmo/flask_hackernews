@@ -1,5 +1,5 @@
 body  { font-family: 'Source Sans Pro', sans-serif; font-size:10pt; color:#828282; }
-td    { font-family: 'Source Sans Pro', sans-serif; font-size:11pt; color:#828282; }
+td    { font-family: 'Source Sans Pro', sans-serif; font-size:11pt; color:#000000; }
 
 .admin td   { font-family: 'Source Sans Pro', sans-serif; font-size:8.5pt; color:#000000; }
 .subtext td { font-family: 'Source Sans Pro', sans-serif; font-size:  7pt; color:#828282; }
@@ -14,12 +14,12 @@ a:visited { color:#828282; text-decoration:none; }
 .default { font-family: 'Source Sans Pro', sans-serif; font-size: 10pt; color:#828282; }
 .admin   { font-family: 'Source Sans Pro', sans-serif; font-size:8.5pt; color:#000000; }
 .title   { font-family: 'Source Sans Pro', sans-serif; font-size: 12pt; color:#000000; }
-.subtext { font-family: 'Source Sans Pro', sans-serif; font-size:  10pt; color:#828282; }
-.yclinks { font-family: 'Source Sans Pro', sans-serif; font-size:  8pt; color:#828282; }
-.pagetop { font-family: 'Source Sans Pro', sans-serif; font-size: 12pt; color:#ffffff; }
-.comhead { font-family: 'Source Sans Pro', sans-serif; font-size:  8pt; color:#828282; }
+.subtext { font-family: 'Source Sans Pro', sans-serif; font-size:  9pt; color:#828282; }
+.yclinks { font-family: 'Source Sans Pro', sans-serif; font-size:  9pt; color:#828282; }
+.pagetop { font-family: 'Source Sans Pro', sans-serif; font-size: 10pt; color:#ffffff; }
+.comhead { font-family: 'Source Sans Pro', sans-serif; font-size:  10pt; color:#828282; }
 .comment { font-family: 'Source Sans Pro', sans-serif; font-size:  9pt; }
-.hnname  { margin-right: 5px; }
+.hnname  { margin-right: 5px;margin-left: 15px;}
 
 
 .commtext a:link, .commtext a:visited { text-decoration: underline; }
@@ -28,6 +28,9 @@ a:visited { color:#828282; text-decoration:none; }
 
 .pagetop a:link { color:#ffffff; text-decoration:none; padding: 0px 10px;}
 .pagetop a:visited { color:#ffffff; text-decoration:none; padding: 0px 10px;}
+
+.hnname a:link  { color:#ffffff; }
+.hnname a:visited  { color:#ffffff; }
 
 
 .c00, .c00 a:link { color:#000000; }
@@ -93,7 +96,7 @@ and (max-width : 750px) {
   body { padding: 0; margin: 0; width: 100%; -webkit-text-size-adjust: none; }
   td { height: inherit !important; }
   .title, .comment { font-size: inherit;  }
-  span.pagetop { display: block; margin: 3px 5px; font-size: 16px; }
+  span.pagetop { display: block; margin: 3px 5px; font-size: 14px; }
   span.pagetop b { display: block; font-size: 15px; }
   table.comment-tree .comment a { display: inline-block; max-width: 200px; overflow: hidden; white-space: nowrap;
     text-overflow: ellipsis; vertical-align:top; }

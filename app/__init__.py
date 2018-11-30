@@ -15,7 +15,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 login.login_view = "auth.login"
-login.login_message = "Faz login ou regista-te para fazer isso!"
+login.login_message = "Faz login ou regista-te!"
 mail = Mail()
 moment = Moment()
 

@@ -15,9 +15,9 @@ from app.main.forms import CommentForm, EditProfileForm, PostForm
 from app.models import Comment, Post, User, Vote, Comment_Vote
 from app.main import bp
 
+# TODO create new repo
+# TODO bottom links
 # TODO report content
-# TODO fix headers
-# TODO optimize for mobile
 
 
 def redirect_url(default="main.index"):
@@ -110,6 +110,11 @@ def posts_from_source(url_base):
         start_rank_num=start_rank_num,
         title=f"{url_base}",
     )
+
+
+@bp.route("/sobre", methods=["GET"])
+def about():
+    return render_template("about.html", title="about")
 
 
 @bp.route("/user/<username>", methods=["GET"])
