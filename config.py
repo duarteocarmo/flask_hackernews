@@ -21,3 +21,4 @@ class Config(object):
     TOTAL_POSTS = 100
     USER_POSTS_PER_DAY = 2
     USER_COMMENTS_PER_DAY = 15
+    LOG_TO_STDOUT = os.environ.get("LOG_TO_STDOUT")
