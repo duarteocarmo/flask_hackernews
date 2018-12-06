@@ -4,20 +4,20 @@
 
         {{ moment.include_jquery() }}
         {{ moment.include_moment() }}
-        {{ moment.lang("pt") }}
+        {{ moment.lang("en") }}
 
         {% if title %}
-        <title>{{ title }} - Dev.pt</title>
+        <title>{{ title }} - Flasknews</title>
         {% else %}
-        <title>Welcome to Dev.pt</title>
+        <title>Welcome to Flasknews</title>
         {% endif %}
     </head>
     <body>
         <div>
-            Dev.pt:
+            <b>Flasknews</b>
             <a href="{{ url_for('main.index') }}">Home</a>
-            <a href="{{ url_for('main.new') }}">New</a>
-            <a href="{{ url_for('main.submit') }}">Submeter</a>
+            <a href="{{ url_for('main.new') }}">Recent</a>
+            <a href="{{ url_for('main.submit') }}">Submit</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('auth.login') }}">Login</a>
             {% else %}

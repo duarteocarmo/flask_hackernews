@@ -3,8 +3,8 @@
 {% block content %}
 <ul>
     <li>Utilizador: {{ user.username }}</li>
-    {% if user.about_me  %}<li>Sobre mim: {{ user.about_me}}</li>{% endif %}
-    {% if user.timestamp  %}<li>Criado: {{ moment(user.timestamp).format('LL') }}</li>{% endif %}
+    {% if user.about_me  %}<li>About: {{ user.about_me}}</li>{% endif %}
+    {% if user.timestamp  %}<li>Created: {{ moment(user.timestamp).format('LL') }}</li>{% endif %}
     {% if user.karma  %}<li>Karma: {{ user.karma}}</li>{% endif %}
     {% if user == current_user %}<li>Email: {{ user.email }}</li>{% endif %}  
 </ul>

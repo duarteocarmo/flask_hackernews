@@ -12,21 +12,21 @@
 {% endif %}
 <div>
   <span
-    >{{ post.score }} pontos por
+    >{{ post.score }} points by
     <a href="{{ url_for('main.user', username=post.author.username) }}">{{
       post.author.username
     }}</a>
     {{ moment(post.timestamp).fromNow() }} |
     <a href="{{ url_for('main.post_page', post_id=post.id)}}"
-      >{{ post.total_comments() }} Comentários</a
+      >{{ post.total_comments() }} Comments</a
     ></span
   >
 </div>
 <div>
-  <span><a href="{{ url_for('main.upvote', post_id=post.id)}}">Votar</a></span> {%if
+  <span><a href="{{ url_for('main.upvote', post_id=post.id)}}">Vote</a></span> {%if
   current_user == post.author %}
   <span
-    ><a href="{{ url_for('main.delete_post', post_id=post.id)}}"> Apagar</a></span
+    ><a href="{{ url_for('main.delete_post', post_id=post.id)}}"> Delete</a></span
   >
   {% endif %}
 </div>
