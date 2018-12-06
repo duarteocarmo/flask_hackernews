@@ -14,15 +14,15 @@
     </head>
     <body>
         <div>
-            <b>Flasknews</b>
-            <a href="{{ url_for('main.index') }}">Home</a>
-            <a href="{{ url_for('main.new') }}">Recent</a>
-            <a href="{{ url_for('main.submit') }}">Submit</a>
+            <a href="{{ url_for('main.index') }}"><b>Flasknews</b></a> - 
+            <a href="{{ url_for('main.new') }}">new</a> - 
+            <a href="{{ url_for('main.submit') }}">submit</a> - 
+            <a href="https://github.com/duarteocarmo/flask_hackernews">github</a> -
             {% if current_user.is_anonymous %}
-            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.login') }}">login</a>
             {% else %}
-            <a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a>
-            <a href="{{ url_for('auth.logout') }}">Logout</a>
+            <a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a> - 
+            <a href="{{ url_for('auth.logout') }}">logout</a>
             {% endif %}
         </div>
         <hr>
