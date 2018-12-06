@@ -2,7 +2,7 @@
 
 {% block content %}
 <ul>
-    <li>Utilizador: {{ user.username }}</li>
+    <li>Username: {{ user.username }}</li>
     {% if user.about_me  %}<li>About: {{ user.about_me}}</li>{% endif %}
     {% if user.timestamp  %}<li>Created: {{ moment(user.timestamp).format('LL') }}</li>{% endif %}
     {% if user.karma  %}<li>Karma: {{ user.karma}}</li>{% endif %}

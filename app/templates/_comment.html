@@ -15,12 +15,12 @@
                     {% filter markdown %}{{ comment.text }}{% endfilter %}
                     
             <div>
-                <p><a href="{{url_for('main.reply', comment_id=comment.id)}}"><u>Reply</u></a></p>
+                <p><a href="{{url_for('main.reply', comment_id=comment.id)}}"><u>Reply</u></a> - 
                 {%if current_user == comment.author %}
-                <p><a href="{{url_for('main.delete_comment', comment_id=comment.id)}}">Delete</a></p>
+                <a href="{{url_for('main.delete_comment', comment_id=comment.id)}}">Delete</a> - 
                 {% endif %}
-                <p>Score: {{ comment.score }}</p>
-                <p>Thread Score: {{ comment.thread_score }}</p>
+                Score: {{ comment.score }}</p>
+                
             </div>
             </div>
         </td>
