@@ -1,6 +1,5 @@
 .flaskenv
 app.db
 .vscode
-migrations
 logs
 .env
