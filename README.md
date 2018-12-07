@@ -1,5 +1,5 @@
-<center>
-# flask_hackernews <br/>
+<div align="center">
+<h1>flask_hackernews</h1>
 <a href="https://www.python.org/downloads/release/python-371/">
 <img src="https://img.shields.io/badge/python-3.7.1-blue.svg"/></a>
 <a href=""><img src="https://img.shields.io/badge/license-MIT-green.svg"/></a>
@@ -7,7 +7,7 @@
 <a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/style-black-black.svg"/></a>
 <a href="http://flask.pocoo.org/"><img src="http://flask.pocoo.org/static/badges/flask-project-s.png"/></a>
 </br>
-</center>
+</div>
 **flask_hackernews** is a minimalistic [hackernews](new.ycombinator.com) clone. 
 
 This was built so that beginners who want a hackernews-like application can quickly get to work. 
