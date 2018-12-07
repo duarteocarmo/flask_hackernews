@@ -29,7 +29,7 @@ And that's pretty much it!
 ### Contents
 
 - [Features](#Features)
-- [Set up](#SetupInstructions)
+- [Set up](#set-up-instructions)
 - [Deployment](#Deployment)
 - [About](#About)
 
