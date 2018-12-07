@@ -8,6 +8,7 @@
 <a href="http://flask.pocoo.org/"><img src="http://flask.pocoo.org/static/badges/flask-project-s.png"/></a>
 </br>
 </div>
+<br><br>
 
 **flask_hackernews** is a minimalistic [hackernews](new.ycombinator.com) clone. 
 
