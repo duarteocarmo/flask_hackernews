@@ -17,7 +17,10 @@
         <div>
             <a href="{{ url_for('main.index') }}"><b>Flasknews</b></a> - 
             <a href="{{ url_for('main.new') }}">new</a> - 
-            <a href="{{ url_for('main.submit') }}">submit</a>
+            <a href="{{ url_for('main.submit') }}">submit</a> - 
+            Source code on <a href="https://github.com/duarteocarmo/flask_hackernews">GitHub</a> - 
+            <i> Made with 🐍  by <a href="https://duarteocarmo.com">duarteocarmo</a></i> 
+        
             
 
         <span style="float:right;">
@@ -43,11 +46,6 @@
         {% endwith %}
         {% block content %}{% endblock %}
 
-        <div class="footer">
-            <hr>
-            Source code on <a href="https://github.com/duarteocarmo/flask_hackernews">GitHub</a> - 
-            <i> Made with 🐍  by <a href="https://duarteocarmo.com">duarteocarmo</a></i> 
-          </div>
     </body>
 </html>
 
