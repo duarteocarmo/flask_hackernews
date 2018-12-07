@@ -1,6 +1,7 @@
 <html>
     <head>
-            <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
 
         {{ moment.include_jquery() }}
         {{ moment.include_moment() }}
@@ -16,14 +17,19 @@
         <div>
             <a href="{{ url_for('main.index') }}"><b>Flasknews</b></a> - 
             <a href="{{ url_for('main.new') }}">new</a> - 
-            <a href="{{ url_for('main.submit') }}">submit</a> - 
-            <a href="https://github.com/duarteocarmo/flask_hackernews">github</a> -
-            {% if current_user.is_anonymous %}
-            <a href="{{ url_for('auth.login') }}">login</a>
-            {% else %}
-            <a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a> - 
-            <a href="{{ url_for('auth.logout') }}">logout</a>
-            {% endif %}
+            <a href="{{ url_for('main.submit') }}">submit</a>
+            
+
+        <span style="float:right;">
+                {% if current_user.is_anonymous %}
+                <a href="{{ url_for('auth.login') }}">login</a>
+                {% else %}
+                <a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a> - 
+                <a href="{{ url_for('auth.logout') }}">logout</a>
+                {% endif %}
+            
+        </span>
+            
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}
@@ -36,6 +42,12 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
+
+        <div class="footer">
+            <hr>
+            Source code on <a href="https://github.com/duarteocarmo/flask_hackernews">GitHub</a> - 
+            <i> Made with 🐍  by <a href="https://duarteocarmo.com">duarteocarmo</a></i> 
+          </div>
     </body>
 </html>
 
