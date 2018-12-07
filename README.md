@@ -1,18 +1,13 @@
 <center>
 # flask_hackernews <br/>
 <a href="https://www.python.org/downloads/release/python-371/">
-![pythonver](https://img.shields.io/badge/python-3.7.1-blue.svg)</a>
-![license](https://img.shields.io/badge/license-MIT-green.svg)
-![ver](https://img.shields.io/badge/version-1.0-lightgrey.svg)
-<a href="https://heroku.com">
-![deploy](https://img.shields.io/badge/deploy-heroku-purple.svg)</a>
-<a href="https://github.com/ambv/black">
-![style](https://img.shields.io/badge/style-black-black.svg)</a>
-<a href="http://flask.pocoo.org/">
-    <img src="http://flask.pocoo.org/static/badges/flask-project-s.png" alt="Flask"/>
-  </a>
-</center>
+<img src="https://img.shields.io/badge/python-3.7.1-blue.svg"/></a>
+<a href=""><img src="https://img.shields.io/badge/license-MIT-green.svg"/></a>
+<a href="https://heroku.com"><img src="https://img.shields.io/badge/deploy-heroku-purple.svg"/></a>
+<a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/style-black-black.svg"/></a>
+<a href="http://flask.pocoo.org/"><img src="http://flask.pocoo.org/static/badges/flask-project-s.png"/></a>
 </br>
+</center>
 **flask_hackernews** is a minimalistic [hackernews](new.ycombinator.com) clone. 
 
 This was built so that beginners who want a hackernews-like application can quickly get to work. 
