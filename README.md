@@ -10,7 +10,7 @@
 </div>
 <br><br>
 
-**flask_hackernews** is a minimalistic [hackernews](new.ycombinator.com) clone. 
+**flask_hackernews** is a minimalistic [hackernews](https://news.ycombinator.com) clone. 
 
 This was built so that beginners who want a hackernews-like application can quickly get to work. 
 
