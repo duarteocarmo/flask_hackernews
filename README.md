@@ -1,30 +1,25 @@
-<div align="center">
+<div align="left">
 <h1>flask_hackernews</h1>
 <a href="https://www.python.org/downloads/release/python-371/">
 <img src="https://img.shields.io/badge/python-3.7.1-blue.svg"/></a>
-<a href=""><img src="https://img.shields.io/badge/license-MIT-green.svg"/></a>
-<a href="https://heroku.com"><img src="https://img.shields.io/badge/deploy-heroku-purple.svg"/></a>
-<a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/style-black-black.svg"/></a>
-<a href="http://flask.pocoo.org/"><img src="http://flask.pocoo.org/static/badges/flask-project-s.png"/></a>
 </br>
 </div>
-<br><br>
+<br>
 
-**flask_hackernews** is a minimalistic [hackernews](https://news.ycombinator.com) clone. 
+[**flask_hackernews**](https://hackernews.duarteocarmo.com/) is a minimalistic hackernews clone. 
 
-This was built so that beginners who want a hackernews-like application can quickly get to work. 
+Built so that beginners who want a hackernews-like application can quickly get to work. 
 
-Greatly inspired by the awesome [flask megatutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world).
+Greatly inspired by the awesome [flask megatutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world), one of the best ressources to learn more about flask.
 
-We use: 
+It uses: 
 
 - `flask` as a web framework.
 - `flask-sqlalchemy` as an ORM.
 - `SQLite` as a database.
 - `heroku` for a simple deployment.
-- Some other goodies 😉 (check `requirements.txt`)
+- Other less known libraries listed in`requirements.txt`
 
-And that's pretty much it!
 
 ### Contents
 
