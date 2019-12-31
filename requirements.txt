@@ -2,7 +2,7 @@ SQLAlchemy==1.2.13
 Flask_Moment==0.6.0
 Flask_SQLAlchemy==2.3.2
 Flask_Login==0.4.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 alembic==1.0.2
 Flask_Bcrypt==0.7.1
 Flask_WTF==0.14.2
